@@ -11,7 +11,7 @@ const Layout = ({ children }) => {
             </Head>
             <Navbar />
             <main>{children}</main>
-            <footer>
+            <footer className="bg-gray-800 py-2 text-center text-white">
                 <p>My App &copy; {new Date().getFullYear()}</p>
             </footer>
         </div>
