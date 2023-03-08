@@ -1,6 +1,8 @@
 
 import Head from 'next/head'
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 export async function getServerSideProps() {
   // Fetch data from the API
   const res = await fetch('https://gsmarena-three.vercel.app/');
@@ -15,7 +17,13 @@ export async function getServerSideProps() {
 
 
 export default function Home({ cetegories }) {
-  console.log(cetegories);
+  const router = useRouter();
+  const [query, setQuery] = useState('');
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    router.push(`/search/${slug}`);
+  };
   return (
     <>
       <Head>
@@ -26,28 +34,47 @@ export default function Home({ cetegories }) {
       </Head>
       <main>
 
-        <div className="grid grid-cols-3 gap-5 p-12 bg-gray-200">
-          {
-            cetegories.map((cetegory, idx) => {
-              return (
-                <div key={idx}>
-                  <div className="bg-white shadow-md rounded-md overflow-hidden">
-                    <Link className="block p-4 text-gray-800 hover:text-white hover:bg-gray-800 transition-all"
-                      href={{
-                        pathname: '/brand/[slug]',
-                        query: { slug: cetegory?.slug },
-                      }}
-                    >
+        <div className=" p-12 bg-gray-200">
+          <div className='flex justify-center mb-10'>
+            <form className="flex items-center" onSubmit={handleSearch}>
+              <input
+                type="text"
+                placeholder="Search Your Mobile"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                className="w-full  min-w-[200px] md:min-w-[500px]   p-2 border border-gray-300 rounded-l-md focus:outline-none focus:border-blue-500"
+              />
+              <button
+                type="submit"
+                className="px-4 py-2 bg-gray-700 text-white rounded-r-md hover:bg-blue-600 focus:outline-none"
+              >
+                Search
+              </button>
+            </form>
+          </div>
+          <div className='grid lg:grid-cols-3  grid-cols-1 md:grid-cols-2  gap-5'>
+            {
+              cetegories.map((cetegory, idx) => {
+                return (
+                  <div key={idx}>
+                    <div className="bg-white shadow-md rounded-md overflow-hidden">
+                      <Link className="block p-4 text-gray-800 hover:text-white hover:bg-gray-800 transition-all"
+                        href={{
+                          pathname: '/brand/[slug]',
+                          query: { slug: cetegory?.slug },
+                        }}
+                      >
 
-                      <h4 className="text-lg font-medium">{cetegory?.brandname}</h4>
-                      <p className="text-sm text-gray-600">({cetegory?.count})</p>
+                        <h4 className="text-lg font-medium">{cetegory?.brandname}</h4>
+                        <p className="text-sm text-gray-600">({cetegory?.count})</p>
 
-                    </Link>
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              )
-            })
-          }
+                )
+              })
+            }
+          </div>
         </div>
       </main>
     </>
