@@ -7,11 +7,14 @@ export default function Brand({ data }) {
     return (
         <>
             <Head>
-                <title>Brand</title>
+                <title>{data.catName}</title>
             </Head>
+            <div className="bg-gray-200">
+                <h2 className="text-2xl font-bold  text-gray-700 pt-5 text-center">{data.catName}</h2>
+            </div>
             <div className="grid grid-cols-4 gap-5 p-12 bg-gray-200">
                 {
-                    data.map((phone) => (
+                    data.phones.map((phone) => (
                         <div key={phone.id} className="bg-white shadow-md rounded-md p-4">
                             <div className=" text-center">
                                 <Image src={phone.image} alt={phone.name} width={200} height={200} />

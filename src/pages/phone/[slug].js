@@ -16,15 +16,15 @@ export default function Phone({ data }) {
 
         <>
             <Head>
-                <title>phone</title>
+                <title>{data.deviceName}</title>
             </Head>
             <div className="bg-white shadow-md rounded-md p-4">
-                <div className="flex  gap-12">
-                    <div className="grid items-center">
+                <div className="flex  flex-col md:flex-row  gap-12">
+                    <div className=" text-center">
                         <Image src={data.photoUrl} alt={data.photoUrl} width={200} height={200} />
                     </div>
                     <div>
-                        <h2 className="text-xl font-medium text-gray-800 mb-4">Overview</h2>
+                        <h2 className="text-xl font-medium text-gray-800 mb-4">{data.deviceName}</h2>
                         {data.overview.map((feature, idx) => (
                             <div key={idx} className="flex items-center mb-1">
                                 <h1 className="text-gray-700 mr-4">{feature.feature}</h1>
