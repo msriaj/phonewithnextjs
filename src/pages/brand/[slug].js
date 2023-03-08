@@ -12,7 +12,7 @@ export default function Brand({ data }) {
             <div className="bg-gray-200">
                 <h2 className="text-2xl font-bold  text-gray-700 pt-5 text-center">{data.catName}</h2>
             </div>
-            <div className="grid grid-cols-4 gap-5 p-12 bg-gray-200">
+            <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-4 gap-5 p-12 bg-gray-200">
                 {
                     data.phones.map((phone) => (
                         <div key={phone.id} className="bg-white shadow-md rounded-md p-4">
