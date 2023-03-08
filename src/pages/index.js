@@ -22,7 +22,7 @@ export default function Home({ cetegories }) {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    router.push(`/search/${slug}`);
+    router.push(`/search/${query}`);
   };
   return (
     <>
