@@ -11,7 +11,7 @@ export default function Search({ data }) {
             </Head>
             <div className="grid grid-cols-4 gap-5 p-12 bg-gray-200">
                 {
-                    data.map((phone) => (
+                    data.phones.map((phone) => (
                         <div key={phone.id} className="bg-white shadow-md rounded-md p-4">
                             <div className=" text-center">
                                 <Image src={phone.image} alt={phone.name} width={200} height={200} />
