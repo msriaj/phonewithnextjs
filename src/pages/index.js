@@ -1,29 +1,30 @@
 
+import { API } from '@/config';
 import Head from 'next/head'
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+
+
 export async function getServerSideProps() {
   // Fetch data from the API
-  const res = await fetch('https://gsmarena-three.vercel.app/');
-  const cetegories = await res.json();
-  console.log(cetegories);
-  // Pass data to the page component as props
+  const res = await fetch(`${API}/latest-phones`);
+  const { latestPhones, total } = await res.json();
+  const res2 = await fetch(`${API}/top-categories`);
+  const topCategories = await res2.json();
+
+
   return {
-    props: { cetegories }
+    props: { latestPhones, total, topCategories }
   };
 }
 
 
 
-export default function Home({ cetegories }) {
-  const router = useRouter();
-  const [query, setQuery] = useState('');
+export default function Home({ total, latestPhones, topCategories }) {
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    router.push(`/search/${query}`);
-  };
+
   return (
     <>
       <Head>
@@ -33,48 +34,102 @@ export default function Home({ cetegories }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
+        <div className="flex gap-5 m-2 overflow-x-auto max-w-7xl mx-auto p  px-4 sm:px-6 lg:px-8">
+          {
+            topCategories.map((category) => (
+              <div key={category._id} className="bg-gray-300 hover:bg-gray-400 text-gray-800 py-1 px-3 rounded-full inline-flex items-center text-xs">
+                <Link href={`/brand/${category._id}`}
+                >
+                  <h3>{category.brandName}</h3>
+                </Link>
+              </div>
+            ))
+          }
+        </div>
+        <h2 className='font-semibold text-xl  px-3 md:px-12 pt-6  text-gray-900 bg-gray-50'>
+          Latest Phones
+        </h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5  lg:grid-cols-7 gap-5 p-3 md:p-12 pt-3 md:pt-3 bg-gray-50">
 
-        <div className=" p-12 bg-gray-200">
-          <div className='flex justify-center mb-10'>
-            <form className="flex items-center" onSubmit={handleSearch}>
-              <input
-                type="text"
-                placeholder="Search Your Mobile"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                className="w-full  min-w-[200px] md:min-w-[500px]   p-2 border border-gray-300 rounded-l-md focus:outline-none focus:border-blue-500"
-              />
-              <button
-                type="submit"
-                className="px-4 py-2 bg-gray-700 text-white rounded-r-md hover:bg-blue-600 focus:outline-none"
-              >
-                Search
-              </button>
-            </form>
-          </div>
-          <div className='grid lg:grid-cols-3  grid-cols-1 md:grid-cols-2  gap-5'>
-            {
-              cetegories.map((cetegory, idx) => {
-                return (
-                  <div key={idx}>
-                    <div className="bg-white shadow-md rounded-md overflow-hidden">
-                      <Link className="block p-4 text-gray-800 hover:text-white hover:bg-gray-800 transition-all"
-                        href={{
-                          pathname: '/brand/[slug]',
-                          query: { slug: cetegory?.slug },
-                        }}
-                      >
-
-                        <h4 className="text-lg font-medium">{cetegory?.brandname}</h4>
-                        <p className="text-sm text-gray-600">({cetegory?.count})</p>
-
-                      </Link>
-                    </div>
+          {
+            latestPhones.map((phone) => (
+              <Link key={phone.id} href={{
+                pathname: '/phone/[slug]',
+                query: { slug: phone?._id },
+              }}>
+                <div className="bg-white hover:shadow rounded-md p-4">
+                  <div className=" flex justify-center">
+                    <Image src={`https://res.cloudinary.com/dpny6m6gz/image/upload/${phone.images[0]}`} width={100} height={200} alt={phone.deviceName} />
                   </div>
-                )
-              })
-            }
-          </div>
+                  <h1 className="mt-4 text-xl text-center font-medium text-gray-800">{phone.deviceName}</h1>
+                  {/* <p className="text-gray-600 text-xs max-h-[200px] overflow-hidden hover:text-gray-800 transition-colors">{phone.details}</p> */}
+                  {/* <p>Price : {phone?.prices[0].BDT}</p> */}
+
+                </div>
+              </Link>
+            ))
+          }
+
+
+        </div>
+        <div className='max-w-7xl mx-auto  px-8 mb-8 '>
+          <nav className="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+            <a
+              href="#"
+              className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+            >
+              <span className="sr-only">Previous</span>
+              left
+            </a>
+            {/* Current: "z-10 bg-gray-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600", Default: "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0" */}
+            <a
+              href="#"
+              aria-current="page"
+              className="relative z-10 inline-flex items-center bg-gray-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+              1
+            </a>
+            <a
+              href="#"
+              className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+            >
+              2
+            </a>
+            <a
+              href="#"
+              className="relative hidden items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex"
+            >
+              3
+            </a>
+            <span className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 focus:outline-offset-0">
+              ...
+            </span>
+            <a
+              href="#"
+              className="relative hidden items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex"
+            >
+              8
+            </a>
+            <a
+              href="#"
+              className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+            >
+              9
+            </a>
+            <a
+              href="#"
+              className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+            >
+              10
+            </a>
+            <a
+              href="#"
+              className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+            >
+              <span className="sr-only">Next</span>
+              right
+            </a>
+          </nav>
         </div>
       </main>
     </>

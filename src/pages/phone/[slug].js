@@ -8,6 +8,7 @@ import {
     faCalendar,
     faAndroid,
 } from "@fortawesome/free-solid-svg-icons";
+import { API } from "@/config";
 
 
 export default function Phone({ data }) {
@@ -21,28 +22,32 @@ export default function Phone({ data }) {
             <div className="bg-white shadow-md rounded-md p-4">
                 <div className="flex  flex-col md:flex-row  gap-12">
                     <div className=" text-center">
-                        <Image src={data.photoUrl} alt={data.photoUrl} width={200} height={200} />
+                        <Image src={`https://res.cloudinary.com/dpny6m6gz/image/upload/${data.images[0]}`} alt="hellow" width={200} height={200} />
                     </div>
                     <div>
                         <h2 className="text-xl font-medium text-gray-800 mb-4">{data.deviceName}</h2>
-                        {data.overview.map((feature, idx) => (
-                            <div key={idx} className="flex items-center mb-1">
-                                <h1 className="text-gray-700 mr-4">{feature.feature}</h1>
 
-                                <span className="text-gray-600">{feature.value}</span>
+                        {data.overview.map((key, idx) => (
+                            <div key={idx} className="flex items-center">
+                                <FontAwesomeIcon icon={faCalendar} className="text-gray-600 mr-2" />
+                                <span className="text-gray-600">
+                                    {Object.keys(key)} : {Object.values(key)}
+                                </span>
                             </div>
                         ))}
+
+
                     </div>
                 </div>
                 <div className="mt-4">
                     {data.information.map((info, idx) => (
                         <div className="border my-12 border-gray-700 rounded-[10px] overflow-hidden" key={idx}>
-                            <h1 className="text-md text-white px-4 py-2  font-medium bg-gray-800 mb-2">{info.tabName}</h1>
+                            <h1 className="text-md text-white px-4 py-2  font-medium bg-gray-800 mb-2">{Object.keys(info)[0]}</h1>
                             <div>
-                                {info.options.map((option, idx) => (
+                                {Object.values(info)[0].map((option, idx) => (
                                     <div key={idx} className="border-b last-child():border-0 px-4  flex mb-2">
-                                        <b className="text-gray-700 mr-4">{option.option}</b>
-                                        <span className="text-gray-600">{option.value}</span>
+                                        <b className="text-gray-700 mr-4">{Object.keys(option)[0]}</b>
+                                        <span className="text-gray-600">{Object.values(option)[0]} </span>
                                     </div>
                                 ))}
                             </div>
@@ -58,7 +63,7 @@ export default function Phone({ data }) {
 
 export async function getServerSideProps({ params }) {
     // Fetch data from the API based on the slug parameter
-    const res = await fetch(`https://gsmarena-three.vercel.app/phone/${params.slug}`);
+    const res = await fetch(`${API}/phone-details/${params.slug}`);
     const data = await res.json();
     console.log(data);
     // Pass data to the page component as props
