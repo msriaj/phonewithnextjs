@@ -47,7 +47,7 @@ export default function Home({ total, latestPhones, topCategories }) {
                 <div className=" flex justify-center">
                   <Image
                     src={`https://res.cloudinary.com/dpny6m6gz/image/upload/${phone.images[0]}`}
-                    width={100}
+                    width={200}
                     height={200}
                     alt={phone.deviceName}
                   />
