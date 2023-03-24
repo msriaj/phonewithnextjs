@@ -4,11 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-export default function Home({ total, latestPhones, topCategories }) {
-  const limit = 21;
+export default function Home({ latestPhones, topCategories }) {
+
   const { query } = useRouter();
   const page = query.page || 1;
-  const lastPage = Math.ceil(total / limit);
+
 
   return (
     <>
