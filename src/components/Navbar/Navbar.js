@@ -4,7 +4,7 @@ import Link from "next/link";
 const Navbar = () => {
   return (
     <>
-      <nav className="bg-gray-800">
+      <nav className="bg-[#091621]">
         <div className="max-w-7xl mx-auto py-3  px-4 sm:px-6 lg:px-8 flex  justify-between items-center">
           <button className="flex md:hidden">
             <svg

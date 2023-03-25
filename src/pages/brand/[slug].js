@@ -53,7 +53,7 @@ export default function Brand({ phoneList, categoryInfo }) {
                                 </div>
                                 <h1 className="mt-4 text-xl text-center font-medium text-gray-800">{phone.deviceName}</h1>
                                 {/* <p className="text-gray-600 text-xs max-h-[200px] overflow-hidden hover:text-gray-800 transition-colors">{phone.details}</p> */}
-                                {/* <p>Price : {phone?.prices[0].BDT}</p> */}
+                                <p> {phone?.prices[0].BDT} TAKA</p>
 
                             </div>
                         </Link>

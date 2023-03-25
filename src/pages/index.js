@@ -19,7 +19,7 @@ export default function Home({ latestPhones, topCategories }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div className="flex gap-5 m-2 overflow-x-auto max-w-7xl mx-auto p  px-4 sm:px-6 lg:px-8">
+        <div className="flex gap-5 py-3 overflow-x-auto max-w-7xl mx-auto    px-4 sm:px-6 lg:px-8">
           {topCategories.map((category) => (
             <div
               key={category._id}
@@ -31,63 +31,67 @@ export default function Home({ latestPhones, topCategories }) {
             </div>
           ))}
         </div>
-        <h2 className="font-semibold text-xl  px-3 md:px-12 pt-6  text-gray-900 bg-gray-50">
-          Latest Phones
-        </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5  lg:grid-cols-7 gap-5 p-3 md:p-12 pt-3 md:pt-3 bg-gray-50">
-          {latestPhones.map((phone) => (
-            <Link
-              key={phone.id}
-              href={{
-                pathname: "/phone/[slug]",
-                query: { slug: phone?._id },
-              }}
-            >
-              <div className="bg-white hover:shadow rounded-md p-4">
-                <div className=" flex justify-center">
-                  <Image
-                    src={`https://res.cloudinary.com/dpny6m6gz/image/upload/${phone.images[0]}`}
-                    width={200}
-                    height={200}
-                    alt={phone.deviceName}
-                  />
+        <div className="shadow-md">
+          <h2 className="font-semibold text-xl  px-3 md:px-12 pt-6  text-gray-900 bg-gray-50">
+            Latest Phones
+          </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5  lg:grid-cols-7 gap-5 p-3 md:p-12 pt-3 md:pt-3 bg-gray-50 ">
+            {latestPhones.map((phone) => (
+              <Link
+                key={phone.id}
+                href={{
+                  pathname: "/phone/[slug]",
+                  query: { slug: phone?._id },
+                }}
+              >
+                <div className="bg-white hover:shadow rounded-md p-4">
+                  <div className=" flex justify-center">
+                    <Image
+                      src={`https://res.cloudinary.com/dpny6m6gz/image/upload/${phone.images[0]}`}
+                      width={200}
+                      height={200}
+                      alt={phone.deviceName}
+                    />
+                  </div>
+                  <h1 className="mt-4 text-xl text-center font-medium text-gray-800">
+                    {phone.deviceName}
+                  </h1>
+                  {/* <p className="text-gray-600 text-xs max-h-[200px] overflow-hidden hover:text-gray-800 transition-colors">{phone.details}</p> */}
+                  <p className="text-center"> {phone?.prices[0].BDT} TAKA</p>
                 </div>
-                <h1 className="mt-4 text-xl text-center font-medium text-gray-800">
-                  {phone.deviceName}
-                </h1>
-                {/* <p className="text-gray-600 text-xs max-h-[200px] overflow-hidden hover:text-gray-800 transition-colors">{phone.details}</p> */}
-                {/* <p>Price : {phone?.prices[0].BDT}</p> */}
-              </div>
-            </Link>
-          ))}
-        </div>
-        <div className="max-w-7xl mx-auto  px-8 mb-8 ">
-          <nav className="flex justify-center gap-6" aria-label="Pagination">
-            {page > 1 && (
+              </Link>
+            ))}
+
+          </div>
+          <div className="max-w-7xl mx-auto bg-gray-50  p-8 mb-8 ">
+            <nav className="flex justify-center gap-6" aria-label="Pagination">
+              {page > 1 && (
+                <Link
+                  href={{
+                    pathname: "/",
+                    query: { page: parseInt(page) - 1 },
+                  }}
+                  className="px-3 border py-2 border-gray-900 hover:bg-gray-900 hover:text-white"
+                >
+                  <span className="sr-only">Previous</span>
+                  &laquo; Prev Page
+                </Link>
+              )}
+
               <Link
                 href={{
                   pathname: "/",
-                  query: { page: parseInt(page) - 1 },
+                  query: { page: parseInt(page) + 1 },
                 }}
-                className="px-3 border py-2 border-gray-900 hover:bg-gray-900 hover:text-white"
+                className="px-3 py-2 border border-gray-900 hover:bg-gray-900 hover:text-white"
               >
-                <span className="sr-only">Previous</span>
-                &laquo; Prev Page
+                <span className="sr-only">Next</span>
+                Next Page &raquo;
               </Link>
-            )}
-
-            <Link
-              href={{
-                pathname: "/",
-                query: { page: parseInt(page) + 1 },
-              }}
-              className="px-3 py-2 border border-gray-900 hover:bg-gray-900 hover:text-white"
-            >
-              <span className="sr-only">Next</span>
-              Next Page &raquo;
-            </Link>
-          </nav>
+            </nav>
+          </div>
         </div>
+
       </main>
     </>
   );
