@@ -5,10 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 export default function Home({ latestPhones, topCategories }) {
-
   const { query } = useRouter();
   const page = query.page || 1;
-
 
   return (
     <>
@@ -61,7 +59,6 @@ export default function Home({ latestPhones, topCategories }) {
                 </div>
               </Link>
             ))}
-
           </div>
           <div className="max-w-7xl mx-auto bg-gray-50  p-8 mb-8 ">
             <nav className="flex justify-center gap-6" aria-label="Pagination">
@@ -91,7 +88,6 @@ export default function Home({ latestPhones, topCategories }) {
             </nav>
           </div>
         </div>
-
       </main>
     </>
   );
