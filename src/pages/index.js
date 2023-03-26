@@ -9,8 +9,8 @@ export default function Home({
   latestPhones,
   topCategories,
   total,
-  categories,
-  popularBrands,
+  allCategories,
+  popularPhones,
 }) {
   const Router = useRouter();
   const { query } = Router;
@@ -39,7 +39,7 @@ export default function Home({
         </div>
         <div className="grid md:pt-5 gap-5 md:grid-cols-12">
           <div className="col-span-9  ">
-            {popularBrands.map((brand) => (
+            {popularPhones.map((brand) => (
               <>
                 <div className="mb-2  bg-white rounded-[4px] shadow-sm   mx-3 md:mx-12 flex justify-between items-center px-3 ">
                   <h2 className="text-[16px] font-bold  text-gray-700 capitalize  p-3 ">
@@ -146,7 +146,7 @@ export default function Home({
               <span className="text-[#ef4a23] font-bold px-1">Categories</span>
             </h2>
             <div className="grid grid-cols-2 gap-3 font-bold text-center">
-              {categories.map((category) => (
+              {allCategories.map((category) => (
                 <div
                   key={category._id}
                   className=" border border-gray-200  hover:bg-gray-200 text-gray-800 py-1 px-3  cursor-pointer inline-flex items-center text-xs"
@@ -165,21 +165,17 @@ export default function Home({
 }
 
 export async function getServerSideProps({ query }) {
-  const res = await fetch(`${API}/latest-phones?page=${query.page}`);
-  const { latestPhones, total } = await res.json();
-  const res2 = await fetch(`${API}/top-categories`);
-  const topCategories = await res2.json();
-  const res3 = await fetch(`${API}/categories`);
-  const categories = await res3.json();
-  const res4 = await fetch(`${API}/popular`);
-  const popularBrands = await res4.json();
+  const res = await fetch(`${API}/home?page=${query.page}`);
+  const { topCategories, allCategories, popularPhones, latestPhones, total } =
+    await res.json();
+
   return {
     props: {
+      topCategories,
+      allCategories,
+      popularPhones,
       latestPhones,
       total,
-      topCategories,
-      categories,
-      popularBrands,
     },
   };
 }

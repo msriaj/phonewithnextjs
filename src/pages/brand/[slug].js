@@ -89,7 +89,7 @@ export default function Brand({ phoneList, categoryInfo, totalPage }) {
               <Collapse expandIconPosition={"end"} bordered={false}>
                 <Panel header={key} key="1">
                   {filterOptions[key].map((option) => (
-                    <div className="flex mb-2" key={option}>
+                    <div className="flex p-2 hover:bg-gray-100" key={option}>
                       <Checkbox>{option}</Checkbox>
                     </div>
                   ))}
@@ -156,8 +156,8 @@ export default function Brand({ phoneList, categoryInfo, totalPage }) {
                     query: { page: number },
                   });
                 }}
-                total={totalPage * 28}
-                pageSize={28}
+                total={totalPage * 20}
+                pageSize={20}
               />{" "}
             </div>
           </div>

@@ -1,76 +1,36 @@
-import { HomeOutlined } from "@ant-design/icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  AndroidFilled,
+  AppstoreFilled,
+  CalendarFilled,
+  CameraFilled,
+  DatabaseFilled,
+  HddFilled,
+  HomeOutlined,
+  MobileFilled,
+  TabletFilled,
+  ThunderboltFilled,
+} from "@ant-design/icons";
 import Head from "next/head";
 import Image from "next/image";
 
-// import the icons you need
 import { API } from "@/config";
-import {
-  faBattery,
-  faCalendar,
-  faCamera,
-  faHdd,
-  faMemory,
-  faMobile,
-  faRobot,
-  faTabletAndroid,
-} from "@fortawesome/free-solid-svg-icons";
+
 import { Breadcrumb } from "antd";
 import Link from "next/link";
 
 export default function Phone({ data }) {
   const icons = {
-    released: (
-      <div className="text-gray-600">
-        <FontAwesomeIcon icon={faCalendar} className=" mr-2" /> Released:
-      </div>
-    ),
-    body: (
-      <div className="text-gray-600">
-        <FontAwesomeIcon icon={faMobile} className="text-gray-600 mr-2" />
-        Body:
-      </div>
-    ),
-    os: (
-      <div className="text-gray-600">
-        <FontAwesomeIcon icon={faRobot} className="text-gray-600 mr-2" />
-        OS:
-      </div>
-    ),
-    storage: (
-      <div className="text-gray-600">
-        <FontAwesomeIcon icon={faHdd} className="text-gray-600 mr-2" />
-        Storage:
-      </div>
-    ),
-    displaysize: (
-      <div className="text-gray-600">
-        <FontAwesomeIcon
-          icon={faTabletAndroid}
-          className="text-gray-600 mr-2"
-        />
-        Display:
-      </div>
-    ),
-    camerapixels: (
-      <div className="text-gray-600">
-        <FontAwesomeIcon icon={faCamera} className="text-gray-600 mr-2" />
-        Camera:
-      </div>
-    ),
-    batsize: (
-      <div className="text-gray-600">
-        <FontAwesomeIcon icon={faBattery} className="text-gray-600 mr-2" />
-        Battery:
-      </div>
-    ),
-    ramsize: (
-      <div className="text-gray-600">
-        <FontAwesomeIcon icon={faMemory} className="text-gray-600 mr-2" />
-        RAM:
-      </div>
-    ),
+    released: <CalendarFilled />,
+    body: <MobileFilled />,
+    camerapixels: <CameraFilled />,
+    ramsize: <DatabaseFilled />,
+    batsize: <ThunderboltFilled />,
+    storage: <HddFilled />,
+    processor: <AppstoreFilled />,
+    os: <AndroidFilled />,
+    displaysize: <TabletFilled />,
   };
+
   return (
     <>
       <Head>
@@ -118,9 +78,10 @@ export default function Phone({ data }) {
                     key={idx}
                     className="text-[12px] px-[6px] py-[4px] text-[#666666] rounded-[30px] bg-[rgba(55,73,187,.05)] mr-4"
                   >
-                    Price :{" "}
+                    {Object.keys(price)[0]}:
                     <b className="text-[14px] text-[#000000]">
-                      {Object.values(price)[0]} {Object.keys(price)[0]}
+                      {" "}
+                      {Object.values(price)[0]} TK
                     </b>
                   </span>
                 ))}
@@ -130,9 +91,26 @@ export default function Phone({ data }) {
               </div>
               <h2 className="text-[18px] my-[16px]">Key Features</h2>
               {data.overview.map((key, idx) => (
-                <div key={idx} className="flex items-center">
-                  <b> {icons[Object.keys(key)[0]]}</b>
-                  <span className="text-gray-600 ml-2">
+                <div
+                  key={idx}
+                  className="flex bg-[#091621a9] md:w-[70%] hover:bg-[#091621] hover:cursor-pointer transition-colors duration-150 ease-in-out  mb-2 text-white items-center"
+                >
+                  <span className="p-4  grid place-items-center bg-[#091621]">
+                    {icons[Object.keys(key)[0]]}
+                  </span>
+                  <b className="p-3">
+                    {" "}
+                    {Object.keys(key)[0] == "ramsize" && "RAM"}{" "}
+                    {Object.keys(key)[0] == "batsize" && "Battery"}{" "}
+                    {Object.keys(key)[0] == "camerapixels" && "Camera"}{" "}
+                    {Object.keys(key)[0] == "displaysize" && "Display"}{" "}
+                    {Object.keys(key)[0] == "processor" && "Processor"}{" "}
+                    {Object.keys(key)[0] == "storage" && "Storage"}{" "}
+                    {Object.keys(key)[0] == "os" && "OS"}{" "}
+                    {Object.keys(key)[0] == "body" && "Body"}{" "}
+                    {Object.keys(key)[0] == "released" && "Released"}{" "}
+                  </b>
+                  <span className=" p-3">
                     {Object.values(key)}{" "}
                     {Object.keys(key)[0] == "ramsize" && "GB"}{" "}
                     {Object.keys(key)[0] == "batsize" && "mAh"}{" "}
