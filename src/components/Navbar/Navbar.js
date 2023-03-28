@@ -1,10 +1,15 @@
 import { API, APP_NAME } from "@/config";
+import { Input, Modal } from "antd";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [searchModal, setSearchModal] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
 
   useEffect(() => {
     fetch(`${API}/top-categories`, { cache: "no-store" })
@@ -13,6 +18,17 @@ const Navbar = () => {
         setCategories(data);
       });
   }, []);
+
+  const handleSearch = (e) => {
+    if (e.target.value.length > 2) {
+      setSearchValue(e.target.value);
+      fetch(`${API}/search?search=${e.target.value}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setSearchResult(data);
+        });
+    }
+  };
 
   return (
     <>
@@ -83,10 +99,11 @@ const Navbar = () => {
             <div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-3 w-3 text-orange-600 cursor-pointer"
+                className="h-4 w-4 text-orange-600 cursor-pointer"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
+                onClick={() => setSearchModal(true)}
               >
                 <path
                   stroke-linecap="round"
@@ -104,7 +121,7 @@ const Navbar = () => {
               {categories.map((category) => (
                 <Link
                   key={category._id}
-                  href={`/category/${category.slug}`}
+                  href={`/brand/${category._id}`}
                   className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                 >
                   {category.brandName}
@@ -114,6 +131,55 @@ const Navbar = () => {
           </div>
         )}
       </nav>
+
+      <Modal
+        open={searchModal}
+        onCancel={() => setSearchModal(false)}
+        footer={null}
+        closable={false}
+        style={{ top: 150 }}
+      >
+        <Input
+          size="large"
+          onChange={(e) => handleSearch(e)}
+          placeholder="Search for a phone"
+        />
+        <p className="my-3 text-gray-500">
+          {searchResult.length > 3 && `Search Results for `}
+          {searchResult.length > 3 && (
+            <span className="font-bold text-gray-700">{searchValue}</span>
+          )}
+        </p>
+        <div className="flex flex-col gap-2 mt-4">
+          {searchResult.map((result) => (
+            <Link
+              key={result._id}
+              href={`/phone/${result._id}`}
+              className="text-gray-300 border-b border-gray-100 flex items-center gap-3  hover:bg-gray-100 hover:text-white   px-3 py-2 rounded-md text-base font-medium"
+            >
+              <Image
+                alt={result.deviceName}
+                src={`https://res.cloudinary.com/dpny6m6gz/image/upload/${result.images[0]}`}
+                width={35}
+                height={35}
+              />
+
+              <div>
+                <p className="mt-4 text-[14px] text-center font-medium text-gray-800">
+                  {result.deviceName}
+                </p>
+                <p className="text-[#ef4a23]  font-semibold">
+                  {" "}
+                  {result?.prices[0].BDT}.00 TK
+                </p>
+              </div>
+            </Link>
+          ))}
+          {searchValue >= 3 && searchResult.length === 0 && (
+            <p className="text-center text-gray-400">No result found</p>
+          )}
+        </div>
+      </Modal>
     </>
   );
 };

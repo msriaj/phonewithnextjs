@@ -17,7 +17,6 @@ import { API } from "@/config";
 
 import { Breadcrumb } from "antd";
 import Link from "next/link";
-import ProductSlider from "@/components/ProductSlider/ProductSlider";
 
 export default function Phone({ data }) {
   const icons = {
