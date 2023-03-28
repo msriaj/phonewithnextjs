@@ -17,6 +17,7 @@ import { API } from "@/config";
 
 import { Breadcrumb } from "antd";
 import Link from "next/link";
+import ProductSlider from "@/components/ProductSlider/ProductSlider";
 
 export default function Phone({ data }) {
   const icons = {
@@ -61,6 +62,8 @@ export default function Phone({ data }) {
         <div className="px-4 ">
           <div className="grid grid-cols-1 md:grid-cols-12 bg-white p-[10px] md:p-[20px] rounded-[4px] shadow-sm  flex-col md:flex-row  gap-12">
             <div className="col-span-5 flex justify-center text-center">
+              {/* <ProductSlider imageUrls={data.images} /> */}
+
               <Image
                 src={`https://res.cloudinary.com/dpny6m6gz/image/upload/${data.images[0]}`}
                 alt={data.deviceName}

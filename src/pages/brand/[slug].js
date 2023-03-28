@@ -15,7 +15,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Brand({ phoneList, categoryInfo, totalPage }) {
   const Router = useRouter();
@@ -23,8 +23,10 @@ export default function Brand({ phoneList, categoryInfo, totalPage }) {
   const { Panel } = Collapse;
   const page = query.page || 1;
 
+
   const [infoIDs, setInfoIDs] = useState([]);
   const [overviewIDs, setOverviewIDs] = useState([]);
+  const [rangeValue, setRangeValue] = useState([0, 200000]);
 
   const infoIDHandaler = (value) => {
     if (infoIDs.includes(value)) {
@@ -41,16 +43,47 @@ export default function Brand({ phoneList, categoryInfo, totalPage }) {
     }
   };
 
-  if (infoIDs.length > 0 || overviewIDs.length > 0) {
-    Router.push({
-      pathname: Router.pathname,
-      query: {
-        ...query,
-        information: infoIDs.join(","),
-        overview: overviewIDs.join(","),
-      },
-    });
-  }
+  useEffect(() => {
+    if (infoIDs.length > 0 && overviewIDs.length > 0) {
+      Router.push({
+        pathname: Router.pathname,
+        query: {
+          ...query,
+          information: infoIDs.join(","),
+          overview: overviewIDs.join(","),
+        },
+      });
+    }
+
+    if (infoIDs.length > 0) {
+      Router.push({
+        pathname: Router.pathname,
+        query: {
+          ...query,
+          information: infoIDs.join(","),
+        },
+      });
+    }
+
+    if (overviewIDs.length > 0) {
+      Router.push({
+        pathname: Router.pathname,
+        query: {
+          ...query,
+          overview: overviewIDs.join(","),
+        },
+      });
+    }
+
+    if (infoIDs.length === 0 && overviewIDs.length === 0) {
+      Router.push({
+        pathname: `/brand/${categoryInfo._id}`,
+
+      });
+    }
+
+  }, [infoIDs, overviewIDs]);
+
   return (
     <>
       <Head>
@@ -88,25 +121,28 @@ export default function Brand({ phoneList, categoryInfo, totalPage }) {
                   range={{
                     draggableTrack: true,
                   }}
-                  defaultValue={[20, 50]}
+                  defaultValue={rangeValue}
+                  onChange={(value) => setRangeValue(value)}
+                  step={5000}
+                  max={200000}
                 />
                 <Row>
                   <Col span={12}>
                     <InputNumber
-                      min={1}
-                      max={20}
+                      value={rangeValue[0]}
                       style={{
                         margin: "0 16px",
                       }}
+                      onChange={(value) => setRangeValue([value, rangeValue[1]])}
                     />
                   </Col>
                   <Col span={4}>
                     <InputNumber
-                      min={1}
-                      max={20}
+                      value={rangeValue[1]}
                       style={{
                         margin: "0 16px",
                       }}
+                      onChange={(value) => setRangeValue([rangeValue[0], value])}
                     />
                   </Col>
                 </Row>
@@ -235,7 +271,9 @@ export default function Brand({ phoneList, categoryInfo, totalPage }) {
 
 export async function getServerSideProps({ params, query }) {
   // Fetch data from the API based on the slug parameter
-  const res = await fetch(`${API}/brand/${params.slug}?page=${query.page}`);
+  const res = await fetch(`${API}/v2/brand/${params.slug}?page=${query.page}${query.information ? `&information=${query.information}` : ""}${query.overview ? `&overview=${query.overview}` : ""}`);
+  console.log(`${API}/brand/${params.slug}?page=${query.page}${query.information ? `&information=${query.information}` : ""}${query.overview ? `&overview=${query.overview}` : ""}`);
+
   const { phoneList, categoryInfo, totalPage } = await res.json();
 
   // Pass data to the page component as props
