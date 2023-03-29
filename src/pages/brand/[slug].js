@@ -29,6 +29,8 @@ export default function Brand({ phoneList, categoryInfo, totalPage }) {
   const [isLoading, setIsLoading] = useState(true);
   const [sort, setSort] = useState(null);
 
+  const [showFilter, setShowFilter] = useState(false);
+
   const [rangeValue, setRangeValue] = useState([0, 200000]);
   const [isRangeValueChange, setIsRangeValueChange] = useState(false);
 
@@ -154,7 +156,7 @@ export default function Brand({ phoneList, categoryInfo, totalPage }) {
             items={[
               {
                 href: "/",
-                title: <HomeOutlined />,
+                title: <>Home</>,
               },
               {
                 title: (
@@ -172,9 +174,9 @@ export default function Brand({ phoneList, categoryInfo, totalPage }) {
       </div>
 
       <div className="grid gap-5 md:grid-cols-12">
-        <div className="hidden md:col-span-3 rounded-[4px]  shadow-sm  md:flex flex-col gap-3 p-3  ">
+        <div className={`${showFilter ? "bg-white h-full overflow-y-auto z-10 fixed top-0 right-0" : "hidden"} md:static md:bg-transparent  md:h-auto  md:col-span-3 rounded-[4px]  shadow-sm  md:flex flex-col gap-3 p-3 `}>
           <div className="bg-white rounded-[4px] shadow-sm">
-            <Collapse bordered={false} expandIconPosition={"end"} activeKey="1">
+            <Collapse bordered={false} showArrow={false} activeKey="1">
               <Panel header="Price Range" key="1">
                 <Slider
                   range={{
@@ -259,9 +261,13 @@ export default function Brand({ phoneList, categoryInfo, totalPage }) {
             </div>
           ))}
         </div>
-        <div className="col-span-9  ">
+        <div className="col-span-9 ">
           <div className="mb-2  bg-white rounded-[4px] shadow-sm capitalize  mx-3 md:mx-12 flex justify-between items-center px-3 ">
-            <h2 className="text-[16px] font-bold  text-gray-700  p-3 ">
+            <div onClick={() => setShowFilter(!showFilter)} className="border cursor-pointer text-gray-700 px-4 rounded-[4px] my-2 flex md:hidden">
+              Filter
+            </div>
+
+            <h2 className="hidden md:flex text-[16px] font-bold  text-gray-700  p-3 ">
               {categoryInfo.brandName}
             </h2>
             <Select
@@ -310,10 +316,8 @@ export default function Brand({ phoneList, categoryInfo, totalPage }) {
 export async function getServerSideProps({ params, query }) {
   // Fetch data from the API based on the slug parameter
   const res = await fetch(
-    `${API}/v2/brand/${params.slug}?page=${query.page}${
-      query.information ? `&information=${query.information}` : ""
-    }${query.overview ? `&overview=${query.overview}` : ""}${
-      query.range ? "&range=" + query.range : ""
+    `${API}/v2/brand/${params.slug}?page=${query.page}${query.information ? `&information=${query.information}` : ""
+    }${query.overview ? `&overview=${query.overview}` : ""}${query.range ? "&range=" + query.range : ""
     }${query.sort ? `&sort=${query.sort}` : ""}`
   );
 

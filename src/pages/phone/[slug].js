@@ -42,7 +42,7 @@ export default function Phone({ data }) {
             items={[
               {
                 href: "/",
-                title: <HomeOutlined />,
+                title: <>Home</>,
               },
               {
                 href: `/brand/${data.categoryInfo._id}`,
@@ -100,7 +100,7 @@ export default function Phone({ data }) {
                   <span className="p-4  grid place-items-center bg-[#091621]">
                     {icons[Object.keys(key)[0]]}
                   </span>
-                  <b className="p-3">
+                  <b className="p-3 text-xs">
                     {" "}
                     {Object.keys(key)[0] == "ramsize" && "RAM"}{" "}
                     {Object.keys(key)[0] == "batsize" && "Battery"}{" "}
@@ -112,7 +112,7 @@ export default function Phone({ data }) {
                     {Object.keys(key)[0] == "body" && "Body"}{" "}
                     {Object.keys(key)[0] == "released" && "Released"}{" "}
                   </b>
-                  <span className=" p-3">
+                  <span className="text-xs p-3">
                     {Object.values(key)}{" "}
                     {Object.keys(key)[0] == "ramsize" && "GB"}{" "}
                     {Object.keys(key)[0] == "batsize" && "mAh"}{" "}
