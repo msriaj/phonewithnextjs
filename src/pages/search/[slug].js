@@ -42,7 +42,6 @@ export async function getServerSideProps({ params }) {
     // Fetch data from the API based on the slug parameter
     const res = await fetch(`https://gsmarena-three.vercel.app/search/${params.slug}`);
     const data = await res.json();
-    console.log(data);
     // Pass data to the page component as props
     return {
         props: { data }
