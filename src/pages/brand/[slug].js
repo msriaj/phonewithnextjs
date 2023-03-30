@@ -14,51 +14,8 @@ import {
   Slider,
 } from "antd";
 import Head from "next/head";
-<<<<<<< HEAD
-import Image from "next/image";
-import Link from "next/link";
-
-export default function Brand({ data }) {
-  return (
-    <>
-      <Head>
-        <title>Brand Name</title>
-      </Head>
-      <div className="bg-gray-200">
-        <h2 className="text-2xl font-bold  text-gray-700 pt-5 text-center">
-          {data.catName}
-        </h2>
-      </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5  lg:grid-cols-7 gap-5 p-3 md:p-12 pt-3 md:pt-3 bg-gray-50">
-        {data.map((phone) => (
-          <Link
-            key={phone.id}
-            href={{
-              pathname: "/phone/[slug]",
-              query: { slug: phone?._id },
-            }}
-          >
-            <div className="bg-white hover:shadow rounded-md p-4">
-              <div className=" flex justify-center">
-                <Image
-                  src={`https://res.cloudinary.com/dpny6m6gz/image/upload/${phone.images[0]}`}
-                  width={100}
-                  height={200}
-                  alt={phone.deviceName}
-                />
-              </div>
-              <h1 className="mt-4 text-xl text-center font-medium text-gray-800">
-                {phone.deviceName}
-              </h1>
-              {/* <p className="text-gray-600 text-xs max-h-[200px] overflow-hidden hover:text-gray-800 transition-colors">{phone.details}</p> */}
-              {/* <p>Price : {phone?.prices[0].BDT}</p> */}
-            </div>
-          </Link>
-        ))}
-=======
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-
 
 export default function Brand({ phoneList, categoryInfo, totalPage }) {
   const Router = useRouter();
@@ -216,7 +173,13 @@ export default function Brand({ phoneList, categoryInfo, totalPage }) {
       </div>
 
       <div className="grid gap-5 md:grid-cols-12">
-        <div className={`${showFilter ? "bg-white h-full overflow-y-auto z-10 fixed top-0 right-0" : "hidden"} md:static md:bg-transparent  md:h-auto  md:col-span-3 rounded-[4px]  shadow-sm  md:flex flex-col gap-3 p-3 `}>
+        <div
+          className={`${
+            showFilter
+              ? "bg-white h-full overflow-y-auto z-10 fixed top-0 right-0"
+              : "hidden"
+          } md:static md:bg-transparent  md:h-auto  md:col-span-3 rounded-[4px]  shadow-sm  md:flex flex-col gap-3 p-3 `}
+        >
           <div className="bg-white rounded-[4px] shadow-sm">
             <Collapse bordered={false} showArrow={false} activeKey="1">
               <Panel header="Price Range" key="1">
@@ -305,7 +268,10 @@ export default function Brand({ phoneList, categoryInfo, totalPage }) {
         </div>
         <div className="col-span-9 ">
           <div className="mb-2  bg-white rounded-[4px] shadow-sm capitalize  mx-3 md:mx-12 flex justify-between items-center px-3 ">
-            <div onClick={() => setShowFilter(!showFilter)} className="border cursor-pointer text-gray-700 px-4 rounded-[4px] my-2 flex md:hidden">
+            <div
+              onClick={() => setShowFilter(!showFilter)}
+              className="border cursor-pointer text-gray-700 px-4 rounded-[4px] my-2 flex md:hidden"
+            >
               Filter
             </div>
 
@@ -350,28 +316,18 @@ export default function Brand({ phoneList, categoryInfo, totalPage }) {
             </div>
           </div>
         </div>
->>>>>>> 02015e21a8a0795475c7facec2401a5256d67d7f
       </div>
     </>
   );
 }
 
-<<<<<<< HEAD
-export async function getServerSideProps({ params }) {
-  // Fetch data from the API based on the slug parameter
-  const res = await fetch(`${API}/brand/${params.slug}`);
-  const data = await res.json();
-  // Pass data to the page component as props
-  return {
-    props: { data },
-  };
-}
-=======
 export async function getServerSideProps({ params, query }) {
   // Fetch data from the API based on the slug parameter
   const res = await fetch(
-    `${API}/v2/brand/${params.slug}?page=${query.page}${query.information ? `&information=${query.information}` : ""
-    }${query.overview ? `&overview=${query.overview}` : ""}${query.range ? "&range=" + query.range : ""
+    `${API}/v2/brand/${params.slug}?page=${query.page}${
+      query.information ? `&information=${query.information}` : ""
+    }${query.overview ? `&overview=${query.overview}` : ""}${
+      query.range ? "&range=" + query.range : ""
     }${query.sort ? `&sort=${query.sort}` : ""}`
   );
 
@@ -384,9 +340,7 @@ export async function getServerSideProps({ params, query }) {
 }
 
 const information = {
-
   "Display Size": [
-
     { 2001: "5.5 inch" },
 
     { 2002: "5.6 inch" },
@@ -416,11 +370,9 @@ const information = {
     { 2014: "6.8 inch" },
 
     { 2015: "6.9 inch" },
-
   ],
 
   "Display Resolution": [
-
     { 1001: "720 x 1280" },
 
     { 1002: "1080 x 1920" },
@@ -428,11 +380,9 @@ const information = {
     { 1003: "1440 x 2560" },
 
     { 1004: "2160 x 3840" },
-
   ],
 
   "Display Type": [
-
     { 3001: "IPS LCD" },
 
     { 3002: "AMOLED" },
@@ -442,11 +392,9 @@ const information = {
     { 3004: "Super AMOLED" },
 
     { 3005: "Super AMOLED Plus" },
-
   ],
 
   Chipset: [
-
     { 4001: "Exynos" },
 
     { 4002: "Snapdragon" },
@@ -468,39 +416,27 @@ const information = {
     { 4010: "Nvidia" },
 
     { 4011: "Intel" },
-
   ],
 
   OS: [
-
     {
-
       5001: "Android",
-
     },
 
     {
-
       5002: "iOS",
-
     },
 
     {
-
       5003: "Windows",
-
     },
 
     {
-
       5004: "BlackBerry",
-
     },
-
   ],
 
   Storage: [
-
     { 100002: "16GB" },
 
     { 100003: "32GB" },
@@ -514,11 +450,9 @@ const information = {
     { 100007: "512GB" },
 
     { 100008: "1TB" },
-
   ],
 
   Features: [
-
     { 8001: "Accelerometer" },
 
     { 8002: "Ambient light sensor" },
@@ -556,15 +490,11 @@ const information = {
     { 8018: "Reverse wireless charging" },
 
     { 8019: "Fast wireless charging" },
-
   ],
-
 };
 
 export const overview = {
-
   "RAM Size": [
-
     { 6003: "2GB" },
 
     { 6005: "3GB" },
@@ -578,11 +508,9 @@ export const overview = {
     { 6013: "12GB" },
 
     { 6015: "16GB" },
-
   ],
 
   Camera: [
-
     { 7001: "8MP" },
 
     { 7002: "12MP" },
@@ -600,11 +528,9 @@ export const overview = {
     { 7008: "64MP" },
 
     { 7009: "108MP" },
-
   ],
 
   "Battery Capacity": [
-
     { 9001: "1000mAh" },
 
     { 9002: "1500mAh" },
@@ -626,8 +552,5 @@ export const overview = {
     { 9010: "5500mAh" },
 
     { 9011: "6000mAh" },
-
   ],
-
 };
->>>>>>> 02015e21a8a0795475c7facec2401a5256d67d7f
