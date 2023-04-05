@@ -1,5 +1,5 @@
 import { API, APP_NAME } from "@/config";
-import { Pagination, Select } from "antd";
+import { Pagination, Select, Spin } from "antd";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,6 +16,12 @@ export default function Home({
   const { query } = Router;
   const page = query.page || 1;
 
+  if (Router.isFallback)
+    return (
+      <div className="grid place-items-center h-screen">
+        <Spin size="large" />
+      </div>
+    );
   return (
     <>
       <Head>
@@ -130,7 +136,7 @@ export default function Home({
                 <Pagination
                   defaultCurrent={page}
                   onChange={(number) => {
-                    Router.push(`/${number}`);
+                    Router.push(`/?page=${number}`);
                   }}
                   total={total}
                   pageSize={28}
@@ -138,21 +144,24 @@ export default function Home({
               </div>
             </div>
           </div>
-          <div className="hidden md:col-span-3 rounded-[4px] bg-white    shadow-sm  md:flex flex-col gap-5 p-3    pt-3 md:pt-3">
+          <div className="hidden md:col-span-3 rounded-[4px] bg-white  h-fit   shadow-sm  md:flex flex-col gap-5 p-3    pt-3 md:pt-3">
             <h2 className="">
               <span className="text-[#ef4a23] font-bold px-1">Categories</span>
             </h2>
-            <div className="grid grid-cols-2 gap-3 font-bold text-center">
-              {allCategories.map((category) => (
-                <div
-                  key={category._id}
-                  className=" border border-gray-200  hover:bg-gray-200 text-gray-800 py-1 px-3  cursor-pointer inline-flex items-center text-xs"
-                >
-                  <Link href={`/brand/${category._id}`}>
-                    <h3 className="text-center">{category.brandName}</h3>
-                  </Link>
-                </div>
-              ))}{" "}
+            <div className="grid grid-cols-3 gap-3 font-bold text-center ">
+              {allCategories.map(
+                (category) =>
+                  category.brandName && (
+                    <div
+                      key={category._id}
+                      className=" border border-gray-200  hover:bg-gray-200 text-gray-800 py-1 px-3 flex justify-center items-center  cursor-pointer   text-xs"
+                    >
+                      <Link className=" " href={`/brand/${category._id}`}>
+                        <h3 className="text-center">{category.brandName}</h3>
+                      </Link>
+                    </div>
+                  )
+              )}
             </div>
           </div>
         </div>
@@ -161,23 +170,7 @@ export default function Home({
   );
 }
 
-// export async function getServerSideProps({ query }) {
-//   const res = await fetch(`${API}/home?page=${query.page || ""}`);
-//   const { topCategories, allCategories, popularPhones, latestPhones, total } =
-//     await res.json();
-
-//   return {
-//     props: {
-//       topCategories,
-//       allCategories,
-//       popularPhones,
-//       latestPhones,
-//       total,
-//     },
-//   };
-// }
-
-export async function getStaticProps() {
+export async function getStaticProps({ query }) {
   const res = await fetch(`${API}/home`);
   const { topCategories, allCategories, popularPhones, latestPhones, total } =
     await res.json();

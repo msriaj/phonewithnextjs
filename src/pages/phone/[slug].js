@@ -14,14 +14,19 @@ import Image from "next/image";
 
 import { API } from "@/config";
 
-import { Breadcrumb } from "antd";
+import { Breadcrumb, Spin } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
 export default function Phone({ data }) {
   const router = useRouter();
 
-  if (router.isFallback) return <div>Loading...</div>;
+  if (router.isFallback)
+    return (
+      <div className="grid place-items-center h-screen">
+        <Spin size="large" />
+      </div>
+    );
 
   const icons = {
     released: <CalendarFilled />,
@@ -64,15 +69,15 @@ export default function Phone({ data }) {
         </div>
         <div className="px-4 ">
           <div className="grid grid-cols-1 md:grid-cols-12 bg-white p-[10px] md:p-[20px] rounded-[4px] shadow-sm  flex-col md:flex-row  gap-12">
-            <div className="col-span-5 flex justify-center text-center">
-              {/* <ProductSlider imageUrls={data.images} /> */}
-
-              <Image
-                src={`https://res.cloudinary.com/dpny6m6gz/image/upload/${data.images[0]}`}
-                alt={data.deviceName}
-                width={300}
-                height={300}
-              />
+            <div className="col-span-5 flex  h-full justify-center items-center text-center">
+              <div className="gird  place-items-center">
+                <Image
+                  src={`https://res.cloudinary.com/dpny6m6gz/image/upload/${data.images[0]}`}
+                  alt={data.deviceName}
+                  width={300}
+                  height={300}
+                />
+              </div>
             </div>
             <div className="col-span-7">
               <h1 className="text-[22px] font-medium text-[#3749bb] mb-4">
@@ -101,57 +106,119 @@ export default function Phone({ data }) {
                   key={idx}
                   className="flex bg-[#091621a9] md:w-[70%] hover:bg-[#091621] hover:cursor-pointer transition-colors duration-150 ease-in-out  mb-2 text-white items-center"
                 >
-                  <span className="p-4  grid place-items-center bg-[#091621]">
+                  <span className="p-5  grid place-items-center bg-[#091621]">
                     {icons[Object.keys(key)[0]]}
                   </span>
-                  <b className="p-3 text-xs">
-                    {" "}
-                    {Object.keys(key)[0] == "ramsize" && "RAM"}{" "}
-                    {Object.keys(key)[0] == "batsize" && "Battery"}{" "}
-                    {Object.keys(key)[0] == "camerapixels" && "Camera"}{" "}
-                    {Object.keys(key)[0] == "displaysize" && "Display"}{" "}
-                    {Object.keys(key)[0] == "processor" && "Processor"}{" "}
-                    {Object.keys(key)[0] == "storage" && "Storage"}{" "}
-                    {Object.keys(key)[0] == "os" && "OS"}{" "}
-                    {Object.keys(key)[0] == "body" && "Body"}{" "}
-                    {Object.keys(key)[0] == "released" && "Released"}{" "}
-                  </b>
-                  <span className="text-xs p-3">
-                    {Object.values(key)}{" "}
-                    {Object.keys(key)[0] == "ramsize" && "GB"}{" "}
-                    {Object.keys(key)[0] == "batsize" && "mAh"}{" "}
-                    {Object.keys(key)[0] == "camerapixels" && "MP"}{" "}
-                    {Object.keys(key)[0] == "displaysize" && "Inch"}
+                  <span className="flex flex-col md:flex-row  p-3 md:gap-2 text-xs">
+                    <b>
+                      {" "}
+                      {Object.keys(key)[0] == "ramsize" && "RAM"}{" "}
+                      {Object.keys(key)[0] == "batsize" && "Battery"}{" "}
+                      {Object.keys(key)[0] == "camerapixels" && "Camera"}{" "}
+                      {Object.keys(key)[0] == "displaysize" && "Display"}{" "}
+                      {Object.keys(key)[0] == "processor" && "Processor"}{" "}
+                      {Object.keys(key)[0] == "storage" && "Storage"}{" "}
+                      {Object.keys(key)[0] == "os" && "OS"}{" "}
+                      {Object.keys(key)[0] == "body" && "Body"}{" "}
+                      {Object.keys(key)[0] == "released" && "Released"}{" "}
+                    </b>
+                    <span>
+                      {Object.values(key)}{" "}
+                      {Object.keys(key)[0] == "ramsize" && "GB"}{" "}
+                      {Object.keys(key)[0] == "batsize" && "mAh"}{" "}
+                      {Object.keys(key)[0] == "camerapixels" && "MP"}{" "}
+                      {Object.keys(key)[0] == "displaysize" && "Inch"}
+                    </span>
                   </span>
                 </div>
               ))}
             </div>
           </div>
           <div className="mt-4 grid grid-cols-1 gap-5 md:grid-cols-7">
-            <div className="md:col-span-5 bg-white p-[10px] md:p-[20px] rounded-[4px] shadow-sm">
-              <h2 className="font-bold text-[20px] mb-[20px]">Specification</h2>
-              {data.information.map((info, idx) => (
-                <div className="mb-5 overflow-hidden" key={idx}>
-                  <h2 className="text-[16px] font-bold rounded-[5px] text-[#3749bb] px-4 py-2  bg-[#F5F6FB] ">
-                    {Object.keys(info)[0]}
-                  </h2>
-                  <div>
-                    {Object.values(info)[0].map((option, idx) => (
-                      <div
-                        key={idx}
-                        className="border-b border-[#ecedef] text-[14px] hover:bg-[#FAFBFC] last-child():border-0 px-[20px] py-[10px] grid grid-cols-1 md:grid-cols-4 "
-                      >
-                        <span className=" text-[#666666] mr-4">
-                          {Object.keys(option)[0]}
-                        </span>
-                        <span className="col-span-3">
-                          {Object.values(option)[0]}{" "}
-                        </span>
+            <div className="md:col-span-5">
+              {data?.review && (
+                <div className=" bg-white p-[5px] md:p-[20px] rounded-[4px] shadow-sm mb-5">
+                  {data?.review && (
+                    <div className="mb-5 overflow-hidden">
+                      <h2 className="font-bold text-[20px] mb-[20px]">
+                        Review
+                      </h2>
+                      <div>
+                        <div className="border-b border-[#ecedef] text-[14px]   last-child():border-0 px-[5px] md:px-[20px] py-[10px] grid grid-cols-1  ">
+                          <p className="whitespace-pre-line text-[#666666] mr-4">
+                            {data.review}
+                          </p>
+                        </div>
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  )}
+
+                  {data?.pros && (
+                    <div className="mb-5 overflow-hidden">
+                      <h2 className="text-[16px] font-bold rounded-[5px] text-[#3749bb] px-4 py-2  bg-[#F5F6FB] ">
+                        Pros
+                      </h2>
+                      <div>
+                        <div className="border-b border-[#ecedef] text-[14px]   last-child():border-0 px-[5px] md:px-[20px] py-[10px] grid grid-cols-1  ">
+                          <p className="whitespace-pre-line text-[#666666] mr-4">
+                            {data.pros}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {data?.cons && (
+                    <div className="mb-5 overflow-hidden">
+                      <h2 className="text-[16px] font-bold rounded-[5px] text-[#3749bb] px-4 py-2  bg-[#F5F6FB] ">
+                        Cons
+                      </h2>
+                      <div>
+                        <div className="border-b border-[#ecedef] text-[14px]   last-child():border-0 px-[5px] md:px-[20px] py-[10px] grid grid-cols-1  ">
+                          <p className="whitespace-pre-line text-[#666666] mr-4">
+                            {data.cons}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
-              ))}
+              )}
+
+              <div className=" bg-white p-[5px] md:p-[20px] rounded-[4px] shadow-sm">
+                <h2 className="font-bold text-[20px] mb-[20px]">
+                  Specification
+                </h2>
+                {data.information.map(
+                  (info, idx) =>
+                    Object.keys(info)[0] && (
+                      <>
+                        <div className="mb-5 overflow-hidden" key={idx}>
+                          <h2 className="text-[16px] font-bold rounded-[5px] text-[#3749bb] px-4 py-2  bg-[#F5F6FB] ">
+                            {Object.keys(info)[0]}
+                          </h2>
+                          <div>
+                            {Object.values(info)[0].map(
+                              (option, idx) =>
+                                Object.values(option)[0] && (
+                                  <div
+                                    key={idx}
+                                    className="border-b border-[#ecedef] text-[14px] hover:bg-[#FAFBFC] last-child():border-0 px-[20px] py-[10px] grid grid-cols-1 md:grid-cols-4 "
+                                  >
+                                    <span className=" text-[#666666] mr-4">
+                                      {Object.keys(option)[0]}
+                                    </span>
+                                    <span className="col-span-3">
+                                      {Object.values(option)[0]}{" "}
+                                    </span>
+                                  </div>
+                                )
+                            )}
+                          </div>
+                        </div>
+                      </>
+                    )
+                )}
+              </div>
             </div>
             <div className="md:col-span-2 rounded-[4px] shadow-sm">
               <h1 className="bg-[#3749bb] text-white text-[16px] font-bold p-[20px] rounded-[4px] mb-[20px]">

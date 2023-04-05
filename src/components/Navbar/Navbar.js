@@ -155,6 +155,7 @@ const Navbar = () => {
             <Link
               key={result._id}
               href={`/phone/${result._id}`}
+              onClick={() => setSearchModal(false)}
               className="text-gray-300 border-b border-gray-100 flex items-center gap-3  hover:bg-gray-100 hover:text-white   px-3 py-2 rounded-md text-base font-medium"
             >
               <Image
