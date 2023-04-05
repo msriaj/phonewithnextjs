@@ -16,6 +16,8 @@ export default function Home({
   const { query } = Router;
   const page = query.page || 1;
 
+  if (Router.isFallback) return <div>Loading...</div>;
+
   return (
     <>
       <Head>
@@ -134,7 +136,7 @@ export default function Home({
                   }}
                   total={total}
                   pageSize={28}
-                />{" "}
+                />
               </div>
             </div>
           </div>
@@ -177,8 +179,8 @@ export default function Home({
 //   };
 // }
 
-export async function getStaticProps() {
-  const res = await fetch(`${API}/home`);
+export async function getStaticProps({ params }) {
+  const res = await fetch(`${API}/home?page=${params.page || ""}`);
   const { topCategories, allCategories, popularPhones, latestPhones, total } =
     await res.json();
 
@@ -191,5 +193,12 @@ export async function getStaticProps() {
       total,
     },
     revalidate: 10,
+  };
+}
+
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: true,
   };
 }

@@ -5,7 +5,6 @@ import {
   CameraFilled,
   DatabaseFilled,
   HddFilled,
-  HomeOutlined,
   MobileFilled,
   TabletFilled,
   ThunderboltFilled,
@@ -17,8 +16,13 @@ import { API } from "@/config";
 
 import { Breadcrumb } from "antd";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function Phone({ data }) {
+  const router = useRouter();
+
+  if (router.isFallback) return <div>Loading...</div>;
+
   const icons = {
     released: <CalendarFilled />,
     body: <MobileFilled />,
@@ -184,12 +188,33 @@ export default function Phone({ data }) {
   );
 }
 
-export async function getServerSideProps({ params }) {
-  // Fetch data from the API based on the slug parameter
+// export async function getServerSideProps({ params }) {
+//   // Fetch data from the API based on the slug parameter
+//   const res = await fetch(`${API}/phone-details/${params.slug}`);
+//   const data = await res.json();
+
+//   return {
+//     props: { data },
+//   };
+// }
+
+export async function getStaticProps({ params }) {
   const res = await fetch(`${API}/phone-details/${params.slug}`);
   const data = await res.json();
 
   return {
     props: { data },
+  };
+}
+
+export async function getStaticPaths() {
+  const res = await fetch(`${API}/home?page=1`);
+  const { latestPhones } = await res.json();
+
+  const paths = latestPhones.map((phone) => ({ params: { slug: phone._id } }));
+
+  return {
+    paths,
+    fallback: true,
   };
 }
