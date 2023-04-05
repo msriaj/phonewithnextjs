@@ -79,6 +79,7 @@ export default function Brand({ phoneList, categoryInfo, totalPage }) {
       Router.events.off("routeChangeComplete", end);
       Router.events.off("routeChangeError", end);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [Router.isReady]);
 
   useEffect(() => {
@@ -118,6 +119,7 @@ export default function Brand({ phoneList, categoryInfo, totalPage }) {
         pathname: `/brand/${categoryInfo._id}`,
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [infoIDs, overviewIDs]);
 
   useEffect(() => {
@@ -130,6 +132,7 @@ export default function Brand({ phoneList, categoryInfo, totalPage }) {
         },
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rangeValue]);
 
   useEffect(() => {
@@ -142,6 +145,7 @@ export default function Brand({ phoneList, categoryInfo, totalPage }) {
         },
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sort]);
 
   return (
