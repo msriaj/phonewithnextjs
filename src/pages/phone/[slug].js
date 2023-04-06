@@ -255,16 +255,6 @@ export default function Phone({ data }) {
   );
 }
 
-// export async function getServerSideProps({ params }) {
-//   // Fetch data from the API based on the slug parameter
-//   const res = await fetch(`${API}/phone-details/${params.slug}`);
-//   const data = await res.json();
-
-//   return {
-//     props: { data },
-//   };
-// }
-
 export async function getStaticProps({ params }) {
   const res = await fetch(`${API}/phone-details/${params.slug}`);
   const data = await res.json();
@@ -275,7 +265,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const res = await fetch(`${API}/home?page=1`);
+  const res = await fetch(`${API}/home?page=1&limit=100`);
   const { latestPhones } = await res.json();
 
   const paths = latestPhones.map((phone) => ({ params: { slug: phone._id } }));
