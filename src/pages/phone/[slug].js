@@ -9,12 +9,12 @@ import {
   TabletFilled,
   ThunderboltFilled,
 } from "@ant-design/icons";
-import Head from "next/head";
 import Image from "next/image";
 
-import { API } from "@/config";
+import { API, APP_NAME } from "@/config";
 
 import { Breadcrumb, Spin } from "antd";
+import { NextSeo, ProductJsonLd } from "next-seo";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -42,9 +42,57 @@ export default function Phone({ data }) {
 
   return (
     <>
-      <Head>
-        <title>{data.deviceName}</title>
-      </Head>
+      {/* <meta
+        title="keywords"
+        content={`${data.deviceName} Price in Bangladesh, ${data.deviceName} Full Specs & Review, ${data.deviceName} Technical Specifications, ${data.deviceName} Dimensions, ${data.deviceName} Display Features, ${data.deviceName} Camera Details, ${data.deviceName} Battery Life, ${data.deviceName} Processor Specs, ${data.deviceName} Storage Capacity, ${data.deviceName} RAM Capacity, ${data.deviceName} Connectivity Options, ${data.deviceName} Operating System, ${data.deviceName} User Interface, ${data.deviceName} User Experience, ${data.deviceName} Review, ${data.deviceName} Comparison, ${data.deviceName} Ratings, ${data.deviceName} User Ratings, ${data.deviceName} Expert Opinion, ${data.deviceName} User Feedback, ${data.deviceName} Mobile Technology, ${data.deviceName} Smartphone Features, ${data.deviceName} Mobile Device Features, ${data.deviceName} Mobile Phone Details, ${data.deviceName} Mobile Phone Specs, ${data.deviceName} Mobile Phone Review, ${data.deviceName} Mobile Phone Comparison, ${data.deviceName} Mobile Phone Ratings, Price of ${data.deviceName} in Bangladesh`}
+      /> */}
+
+      <NextSeo
+        title={`${data.deviceName} Price in Bangladesh 2023 | Full Specs, Review & Comparison | ${APP_NAME}`}
+        description={`${data.deviceName} - Full phone specifications and details, including official and unofficial BD price, expert rating, customer reviews, and comparisons. Check out ${data.deviceName} Price in Bangladesh 2023 and see why it's one of the top phones in the market.`}
+        canonical={"https://www.url.ie/a"}
+        openGraph={{
+          url: "https://www.url.ie/a",
+          title: `${data.deviceName} Price in Bangladesh 2023 | Full Specs, Review & Comparison | ${APP_NAME}`,
+          description: `${data.deviceName} - Full phone specifications and details, including official and unofficial BD price, expert rating, customer reviews, and comparisons. Check out ${data.deviceName} Price in Bangladesh 2023 and see why it's one of the top phones in the market.`,
+          images: [
+            {
+              url: `https://res.cloudinary.com/dpny6m6gz/image/upload/${data.images[0]}`,
+              width: 800,
+              height: 600,
+              alt: data.deviceName,
+              type: "image/jpeg",
+            },
+          ],
+        }}
+      />
+
+      <ProductJsonLd
+        productName={`${data.deviceName} Price in Bangladesh 2023 | Full Specs, Review & Comparison | ${APP_NAME}`}
+        images={[
+          `https://res.cloudinary.com/dpny6m6gz/image/upload/${data.images[0]}`,
+        ]}
+        description={`${data.deviceName} - Full phone specifications and details, including official and unofficial BD price, expert rating, customer reviews, and comparisons. Check out ${data.deviceName} Price in Bangladesh 2023 and see why it's one of the top phones in the market.`}
+        brand={data.categoryInfo.brandName}
+        color="blue"
+        manufacturerName={data.categoryInfo.brandName}
+        slogan={data.details}
+        disambiguatingDescription={`${data.deviceName} - Full phone specifications and details, including official and unofficial BD price, expert rating, customer reviews, and comparisons. Check out ${data.deviceName} Price in Bangladesh 2023 and see why it's one of the top phones in the market. ${data.details}`}
+        releaseDate={data.createdAt}
+        productionDate={data.createdAt}
+        offers={[
+          {
+            price: data.prices[0].BDT,
+            priceCurrency: "BDT",
+            priceValidUntil: data.createdAt,
+            availability: "https://schema.org/InStock",
+            seller: {
+              name: data.categoryInfo.brandName,
+            },
+          },
+        ]}
+      />
+
       <div className="pt-4">
         <div className="p-4 mx-4 mb-5 bg-white rounded-[4px]">
           <Breadcrumb
@@ -265,7 +313,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const res = await fetch(`${API}/home?page=1&limit=100`);
+  const res = await fetch(`${API}/home?page=1&limit=20`);
   const { latestPhones } = await res.json();
 
   const paths = latestPhones.map((phone) => ({ params: { slug: phone._id } }));

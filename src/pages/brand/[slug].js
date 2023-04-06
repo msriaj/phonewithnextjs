@@ -1,7 +1,6 @@
 import ProductCard from "@/components/Card/ProductCard";
 import SkeletonCard from "@/components/Skeleton/SkeletonCard";
 import { API } from "@/config";
-import { HomeOutlined } from "@ant-design/icons";
 import {
   Breadcrumb,
   Checkbox,
@@ -176,11 +175,16 @@ export default function Brand({ phoneList, categoryInfo, totalPage }) {
       </div>
 
       <div className="grid gap-5 md:grid-cols-12">
+        {showFilter && (
+          <div onClick={() => setShowFilter(false)} className="h-screen">
+            <div className="fixed top-0 right-0 w-full h-full bg-black opacity-50 z-10"></div>
+          </div>
+        )}
         <div
           className={`${
             showFilter
-              ? "bg-white h-full overflow-y-auto z-10 fixed top-0 right-0"
-              : "hidden"
+              ? "bg-white h-full overflow-y-auto fixed z-[100]  top-0 right-0 transition-all duration-300 "
+              : " absolute  h-full z-[100]   top-0 -right-96 transition-all duration-300  ease-in-out"
           } md:static md:bg-transparent  md:h-auto  md:col-span-3 rounded-[4px]  shadow-sm  md:flex flex-col gap-3 p-3 `}
         >
           <div className="bg-white rounded-[4px] shadow-sm">

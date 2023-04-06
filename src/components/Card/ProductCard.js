@@ -25,7 +25,12 @@ const ProductCard = ({ phone }) => {
           {/* <p className="text-gray-600 text-xs max-h-[200px] overflow-hidden hover:text-gray-800 transition-colors">{phone.details}</p> */}
           <p className="text-[#ef4a23] text-center font-bold">
             {" "}
-            {phone?.prices[0].BDT} TAKA
+            {typeof phone?.prices[0].BDT === "number"
+              ? phone?.prices[0].BDT.toString().replace(
+                  /\B(?=(\d{3})+(?!\d))/g,
+                  ","
+                ) + " TK"
+              : phone?.prices[0].BDT}
           </p>
         </div>
       </Link>

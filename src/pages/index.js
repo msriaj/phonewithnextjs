@@ -1,7 +1,7 @@
+import ProductCard from "@/components/Card/ProductCard";
 import { API, APP_NAME } from "@/config";
 import { Pagination, Select, Spin } from "antd";
 import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -43,8 +43,8 @@ export default function Home({
             </div>
           ))}
         </div>
-        <div className="grid md:pt-5 gap-5 md:grid-cols-12">
-          <div className="col-span-9  ">
+        <div className="grid md:pt-5 gap-5 grid-cols-1 md:grid-cols-12">
+          <div className="col-span-1 md:col-span-9  ">
             {popularPhones.map((brand) => (
               <>
                 <div className="mb-2  bg-white rounded-[4px] shadow-sm   mx-3 md:mx-12 flex justify-between items-center px-3 ">
@@ -54,32 +54,7 @@ export default function Home({
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5   gap-5 p-3  md:p-12 pt-3 md:pt-3 ">
                   {Object.values(brand)[0].map((phone) => (
-                    <Link
-                      key={phone.id}
-                      href={{
-                        pathname: `/phone/[slug]`,
-                        query: { slug: phone?._id },
-                      }}
-                    >
-                      <div className="bg-white rounded-[4px]  shadow-sm hover:shadow   p-4">
-                        <div className=" flex justify-center">
-                          <Image
-                            src={`https://res.cloudinary.com/dpny6m6gz/image/upload/${phone.images[0]}`}
-                            width={100}
-                            height={200}
-                            alt={phone.deviceName}
-                          />
-                        </div>
-                        <h1 className="mt-4 text-[14px] text-center font-medium text-gray-800">
-                          {phone.deviceName}
-                        </h1>
-                        {/* <p className="text-gray-600 text-xs max-h-[200px] overflow-hidden hover:text-gray-800 transition-colors">{phone.details}</p> */}
-                        <p className="text-[#ef4a23] text-center font-bold">
-                          {" "}
-                          {phone?.prices[0].BDT} TAKA
-                        </p>
-                      </div>
-                    </Link>
+                    <ProductCard key={phone.id} phone={phone} />
                   ))}
                 </div>
               </>
@@ -103,32 +78,7 @@ export default function Home({
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5   gap-5 p-3  md:p-12 pt-3 md:pt-3 ">
               {latestPhones.map((phone) => (
-                <Link
-                  key={phone.id}
-                  href={{
-                    pathname: `/phone/[slug]`,
-                    query: { slug: phone?._id },
-                  }}
-                >
-                  <div className="bg-white rounded-[4px]  shadow-sm hover:shadow   p-4">
-                    <div className=" flex justify-center">
-                      <Image
-                        src={`https://res.cloudinary.com/dpny6m6gz/image/upload/${phone.images[0]}`}
-                        width={100}
-                        height={200}
-                        alt={phone.deviceName}
-                      />
-                    </div>
-                    <h1 className="mt-4 text-[14px] text-center font-medium text-gray-800">
-                      {phone.deviceName}
-                    </h1>
-                    {/* <p className="text-gray-600 text-xs max-h-[200px] overflow-hidden hover:text-gray-800 transition-colors">{phone.details}</p> */}
-                    <p className="text-[#ef4a23] text-center font-bold">
-                      {" "}
-                      {phone?.prices[0].BDT} TAKA
-                    </p>
-                  </div>
-                </Link>
+                <ProductCard key={phone.id} phone={phone} />
               ))}
             </div>
             <div className=" p-3  md:p-12 pt-3 md:pt-3  rounded-[4px]  ">
@@ -144,7 +94,7 @@ export default function Home({
               </div>
             </div>
           </div>
-          <div className="hidden md:col-span-3 rounded-[4px] bg-white  h-fit   shadow-sm  md:flex flex-col gap-5 p-3    pt-3 md:pt-3">
+          <div className="col-span-1 md:col-span-3 rounded-[4px] bg-white  h-fit   shadow-sm  md:flex flex-col gap-5 p-3    pt-3 md:pt-3">
             <h2 className="">
               <span className="text-[#ef4a23] font-bold px-1">Categories</span>
             </h2>
