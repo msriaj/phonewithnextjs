@@ -4,6 +4,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 export default function Home({
   latestPhones,
@@ -15,8 +16,31 @@ export default function Home({
   const Router = useRouter();
   const { query } = Router;
   const page = query.page || 1;
+  const [loading, setLoading] = useState(false);
 
-  if (Router.isFallback) return <div>Loading...</div>;
+  useEffect(() => {
+    const start = () => {
+      console.log("start");
+      setLoading(true);
+    };
+
+    const end = () => {
+      console.log("finished");
+      setLoading(false);
+    };
+
+    Router.events.on("routeChangeStart", start);
+    Router.events.on("routeChangeComplete", end);
+    Router.events.on("routeChangeError", end);
+    return () => {
+      Router.events.off("routeChangeStart", start);
+      Router.events.off("routeChangeComplete", end);
+      Router.events.off("routeChangeError", end);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [Router.isReady]);
+
+  if (Router.isFallback || loading) return <div>Loading...</div>;
 
   return (
     <>
@@ -162,22 +186,6 @@ export default function Home({
     </>
   );
 }
-
-// export async function getServerSideProps({ query }) {
-//   const res = await fetch(`${API}/home?page=${query.page || ""}`);
-//   const { topCategories, allCategories, popularPhones, latestPhones, total } =
-//     await res.json();
-
-//   return {
-//     props: {
-//       topCategories,
-//       allCategories,
-//       popularPhones,
-//       latestPhones,
-//       total,
-//     },
-//   };
-// }
 
 export async function getStaticProps({ params }) {
   const res = await fetch(`${API}/home?page=${params.page || ""}`);

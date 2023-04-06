@@ -33,7 +33,6 @@ export default function Brand({ phoneList, categoryInfo, totalPage }) {
   const [rangeValue, setRangeValue] = useState([0, 200000]);
   const [isRangeValueChange, setIsRangeValueChange] = useState(false);
 
-  console.log(rangeValue);
   const infoIDHandaler = (value) => {
     if (infoIDs.includes(value)) {
       setInfoIDs(infoIDs.filter((id) => id !== value));

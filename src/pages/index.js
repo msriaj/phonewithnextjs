@@ -136,7 +136,7 @@ export default function Home({
                 <Pagination
                   defaultCurrent={page}
                   onChange={(number) => {
-                    Router.push(`/?page=${number}`);
+                    Router.push(`/${number}`);
                   }}
                   total={total}
                   pageSize={28}
