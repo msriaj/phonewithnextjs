@@ -2,22 +2,13 @@ import { API, APP_NAME } from "@/config";
 import { Input, Modal } from "antd";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [categories, setCategories] = useState([]);
   const [searchModal, setSearchModal] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [searchResult, setSearchResult] = useState([]);
-
-  useEffect(() => {
-    fetch(`${API}/top-categories`, { cache: "no-store" })
-      .then((res) => res.json())
-      .then((data) => {
-        setCategories(data);
-      });
-  }, []);
 
   const handleSearch = (e) => {
     if (e.target.value.length > 2) {
@@ -83,15 +74,31 @@ const Navbar = () => {
               </Link>
               <div className="hidden md:block">
                 <div className="ml-10 flex items-baseline space-x-4">
-                  {categories.map((category) => (
-                    <Link
-                      key={category._id}
-                      href={`/brand/${category._id}`}
-                      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >
-                      {category.brandName}
-                    </Link>
-                  ))}
+                  <Link
+                    href={`/brand`}
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    Brands
+                  </Link>
+                  <Link
+                    href={`/phones`}
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    Phones
+                  </Link>
+
+                  <Link
+                    href={`/about`}
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    About
+                  </Link>
+                  <Link
+                    href={`/contact`}
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    Contact
+                  </Link>
                 </div>
               </div>
             </div>
@@ -118,15 +125,18 @@ const Navbar = () => {
         {isOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              {categories.map((category) => (
-                <Link
-                  key={category._id}
-                  href={`/brand/${category._id}`}
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                >
-                  {category.brandName}
-                </Link>
-              ))}
+              <Link
+                href={`/brand`}
+                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+              >
+                Brands
+              </Link>
+              <Link
+                href={`/phones`}
+                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+              >
+                Phones
+              </Link>
             </div>
           </div>
         )}

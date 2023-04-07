@@ -274,7 +274,7 @@ export default function Phone({ data }) {
               </h1>
               {data.relatedPhones.map((phone, idx) => (
                 <div key={idx} className=" bg-white p-[20px] mb-4">
-                  <Link href={`/phone/${phone._id}`}>
+                  <Link href={`/phone/${phone.slug}`}>
                     <div className="flex items-center gap-4">
                       <Image
                         src={`https://res.cloudinary.com/dpny6m6gz/image/upload/${phone.images[0]}`}

@@ -114,7 +114,7 @@ export default function Brand({ phoneList, categoryInfo, totalPage }) {
 
     if (infoIDs.length === 0 && overviewIDs.length === 0) {
       Router.push({
-        pathname: `/brand/${categoryInfo._id}`,
+        pathname: `/brand/${categoryInfo.slug}`,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -338,7 +338,15 @@ export async function getServerSideProps({ params, query }) {
     }${query.sort ? `&sort=${query.sort}` : ""}`
   );
 
-  const { phoneList, categoryInfo, totalPage } = await res.json();
+  const data = await res.json();
+
+  if (!data.totalPage) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const { phoneList, categoryInfo, totalPage } = data;
 
   // Pass data to the page component as props
   return {

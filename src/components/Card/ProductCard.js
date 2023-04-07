@@ -7,7 +7,7 @@ const ProductCard = ({ phone }) => {
       <Link
         href={{
           pathname: `/phone/[slug]`,
-          query: { slug: phone?._id },
+          query: { slug: phone?.slug },
         }}
       >
         <div className="bg-white rounded-[4px]  shadow-sm hover:shadow   p-4">
