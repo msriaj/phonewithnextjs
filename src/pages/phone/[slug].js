@@ -184,55 +184,7 @@ export default function Phone({ data }) {
           </div>
           <div className="mt-4 grid grid-cols-1 gap-5 md:grid-cols-7">
             <div className="md:col-span-5">
-              {data?.review && (
-                <div className=" bg-white p-[5px] md:p-[20px] rounded-[4px] shadow-sm mb-5">
-                  {data?.review && (
-                    <div className="mb-5 overflow-hidden">
-                      <h2 className="font-bold text-[20px] mb-[20px]">
-                        Review
-                      </h2>
-                      <div>
-                        <div className="border-b border-[#ecedef] text-[14px]   last-child():border-0 px-[5px] md:px-[20px] py-[10px] grid grid-cols-1  ">
-                          <p className="whitespace-pre-line text-[#666666] mr-4">
-                            {data.review}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {data?.pros && (
-                    <div className="mb-5 overflow-hidden">
-                      <h2 className="text-[16px] font-bold rounded-[5px] text-[#3749bb] px-4 py-2  bg-[#F5F6FB] ">
-                        Pros
-                      </h2>
-                      <div>
-                        <div className="border-b border-[#ecedef] text-[14px]   last-child():border-0 px-[5px] md:px-[20px] py-[10px] grid grid-cols-1  ">
-                          <p className="whitespace-pre-line text-[#666666] mr-4">
-                            {data.pros}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  {data?.cons && (
-                    <div className="mb-5 overflow-hidden">
-                      <h2 className="text-[16px] font-bold rounded-[5px] text-[#3749bb] px-4 py-2  bg-[#F5F6FB] ">
-                        Cons
-                      </h2>
-                      <div>
-                        <div className="border-b border-[#ecedef] text-[14px]   last-child():border-0 px-[5px] md:px-[20px] py-[10px] grid grid-cols-1  ">
-                          <p className="whitespace-pre-line text-[#666666] mr-4">
-                            {data.cons}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              <div className=" bg-white p-[5px] md:p-[20px] rounded-[4px] shadow-sm">
+              <div className=" bg-white p-3 md:p-[20px] rounded-[4px] shadow-sm">
                 <h2 className="font-bold text-[20px] mb-[20px]">
                   Specification
                 </h2>
@@ -267,6 +219,50 @@ export default function Phone({ data }) {
                     )
                 )}
               </div>
+
+              {data?.review && (
+                <div className="mt-5 bg-white p-3 md:p-[20px] rounded-[4px] shadow-sm mb-5">
+                  {data?.review && (
+                    <div className="mb-5 overflow-hidden">
+                      <h2 className="font-bold text-[20px] mb-[20px]">
+                        Review
+                      </h2>
+                      <div>
+                        <div className="border-b border-[#ecedef] text-[14px]   last-child():border-0   py-[10px] grid grid-cols-1  ">
+                          <p className="whitespace-pre-line text-[#666666] mr-4">
+                            {data.review}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {data?.pros && (
+                    <div className="mb-5 overflow-hidden">
+                      <h2 className="font-bold text-[20px]  ">Cons</h2>
+                      <div>
+                        <div className="border-b border-[#ecedef] text-[14px]   last-child():border-0    grid grid-cols-1  ">
+                          <p className="whitespace-pre-line text-[#666666] mr-4">
+                            {data.pros}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {data?.cons && (
+                    <div className="mb-5 overflow-hidden">
+                      <h2 className="font-bold text-[20px]  ">Cons</h2>
+                      <div>
+                        <div className="border-b border-[#ecedef] text-[14px]   last-child():border-0     grid grid-cols-1  ">
+                          <p className="whitespace-pre-line text-[#666666] mr-4">
+                            {data.cons}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
             <div className="md:col-span-2 rounded-[4px] shadow-sm">
               <h1 className="bg-[#3749bb] text-white text-[16px] font-bold p-[20px] rounded-[4px] mb-[20px]">
@@ -316,7 +312,7 @@ export async function getStaticPaths() {
   const res = await fetch(`${API}/home?page=1&limit=20`);
   const { latestPhones } = await res.json();
 
-  const paths = latestPhones.map((phone) => ({ params: { slug: phone._id } }));
+  const paths = latestPhones.map((phone) => ({ params: { slug: phone.slug } }));
 
   return {
     paths,
