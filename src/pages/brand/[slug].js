@@ -181,11 +181,10 @@ export default function Brand({ phoneList, categoryInfo, totalPage }) {
           </div>
         )}
         <div
-          className={`${
-            showFilter
+          className={`${showFilter
               ? "bg-white h-full overflow-y-auto fixed z-[100]  top-0 right-0 transition-all duration-300 "
               : " absolute  h-full z-[100]   top-0 -right-96 transition-all duration-300  ease-in-out"
-          } md:static md:bg-transparent  md:h-auto  md:col-span-3 rounded-[4px]  shadow-sm  md:flex flex-col gap-3 p-3 `}
+            } md:static md:bg-transparent  md:h-auto  md:col-span-3 rounded-[4px]  shadow-sm  md:flex flex-col gap-3 p-3 `}
         >
           <div className="bg-white rounded-[4px] shadow-sm">
             <Collapse bordered={false} showArrow={false} activeKey="1">
@@ -313,7 +312,7 @@ export default function Brand({ phoneList, categoryInfo, totalPage }) {
                 defaultCurrent={page}
                 onChange={(number) => {
                   Router.push({
-                    pathname: `/brand/${categoryInfo._id}`,
+                    pathname: `/brand/${categoryInfo.slug}`,
                     query: { page: number },
                   });
                 }}
@@ -331,10 +330,8 @@ export default function Brand({ phoneList, categoryInfo, totalPage }) {
 export async function getServerSideProps({ params, query }) {
   // Fetch data from the API based on the slug parameter
   const res = await fetch(
-    `${API}/v2/brand/${params.slug}?page=${query.page}${
-      query.information ? `&information=${query.information}` : ""
-    }${query.overview ? `&overview=${query.overview}` : ""}${
-      query.range ? "&range=" + query.range : ""
+    `${API}/v2/brand/${params.slug}?page=${query.page}${query.information ? `&information=${query.information}` : ""
+    }${query.overview ? `&overview=${query.overview}` : ""}${query.range ? "&range=" + query.range : ""
     }${query.sort ? `&sort=${query.sort}` : ""}`
   );
 

@@ -8,12 +8,11 @@ import { useRouter } from "next/router";
 
 const { Search } = Input;
 
-export default function Home({ latestPhones, total, featuredCategories }) {
+export default function Home({ latestPhones, total, featuredCategories, allCats }) {
   const Router = useRouter();
   const { query } = Router;
   const page = query.page || 1;
 
-  const onSearch = (value) => console.log(value);
 
   if (Router.isFallback)
     return (
@@ -29,55 +28,7 @@ export default function Home({ latestPhones, total, featuredCategories }) {
       />
       <main>
         <div className="py-10 px-3">
-          <div className="bg-orange-100 rounded-xl py-10 max-w-3xl mx-auto ">
-            <div
-              className="
-            max-w-[500px] mx-auto
-            px-4 sm:px-6 lg:px-8
 
-          "
-            >
-              <div className="mb-3 ">
-                {" "}
-                <Input placeholder="Search Your Next Phone" size="large" />
-              </div>
-              <div className="mb-3">
-                <Select
-                  showSearch
-                  style={{ width: "70%" }}
-                  size="large"
-                  placeholder="All Brand"
-                  optionFilterProp="children"
-                  filterOption={(input, option) =>
-                    (option?.label ?? "")
-                      .toLowerCase()
-                      .includes(input.toLowerCase())
-                  }
-                  options={[
-                    {
-                      value: "jack",
-                      label: "Jack",
-                    },
-                    {
-                      value: "lucy",
-                      label: "Lucy",
-                    },
-                    {
-                      value: "tom",
-                      label: "Tom",
-                    },
-                  ]}
-                />
-                <Button
-                  className="bg-[#ef4a23] text-white hover:bg-[#ef4a23] outline-none"
-                  size="large"
-                  style={{ marginLeft: "10px" }}
-                >
-                  Search
-                </Button>
-              </div>
-            </div>{" "}
-          </div>
           <div className="text-center">
             <h2 className="text-[20px] pt-[25px] mb-1.5 font-bold">
               Featured Category
@@ -110,7 +61,8 @@ export default function Home({ latestPhones, total, featuredCategories }) {
           {/* see all brand button */}
           <div className="text-center mb-16">
             <Link href="/brand">
-              <button className="bg-[#ef4a23] text-white font-bold py-2 px-4 rounded-full">
+
+              <button className="bg-[#db2d1a] text-white font-bold py-2 px-4 rounded-full">
                 See All Brands
               </button>
             </Link>
@@ -119,18 +71,7 @@ export default function Home({ latestPhones, total, featuredCategories }) {
             <h2 className="text-[16px] font-bold  text-gray-700  p-3 ">
               Latest Phones
             </h2>
-            <Select
-              defaultValue="Latest"
-              style={{ width: 120 }}
-              onChange={() => {
-                console.log(11);
-              }}
-              options={[
-                { value: "Latest", label: "Latest" },
-                { value: "Price: Low to High", label: "Price: Low to High" },
-                { value: "Price: High to Low", label: "Price: High to Low" },
-              ]}
-            />
+
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-5 p-3  md:p-12 pt-3 md:pt-3 ">
             {latestPhones.map((phone) => (
@@ -157,13 +98,14 @@ export default function Home({ latestPhones, total, featuredCategories }) {
 
 export async function getStaticProps({ query }) {
   const res = await fetch(`${API}/home`);
-  const { featuredCategories, latestPhones, total } = await res.json();
+  const { featuredCategories, allCats, latestPhones, total } = await res.json();
 
   return {
     props: {
       latestPhones,
       total,
       featuredCategories,
+
     },
     revalidate: 10,
   };
