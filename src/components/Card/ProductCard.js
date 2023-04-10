@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const ProductCard = ({ phone }) => {
+const ProductCard = ({ phone, key }) => {
   return (
     <div>
       <Link
@@ -9,6 +9,7 @@ const ProductCard = ({ phone }) => {
           pathname: `/phone/[slug]`,
           query: { slug: phone?.slug },
         }}
+        key={key}
       >
         <div className="bg-white rounded-[4px]  shadow-sm hover:shadow   p-4">
           <div className=" flex justify-center">
@@ -27,9 +28,9 @@ const ProductCard = ({ phone }) => {
             {" "}
             {typeof phone?.prices[0].BDT === "number"
               ? phone?.prices[0].BDT.toString().replace(
-                /\B(?=(\d{3})+(?!\d))/g,
-                ","
-              ) + " TK"
+                  /\B(?=(\d{3})+(?!\d))/g,
+                  ","
+                ) + " TK"
               : phone?.prices[0].BDT}
           </p>
         </div>

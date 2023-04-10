@@ -59,7 +59,7 @@ const index = ({ data }) => {
 
 export default index;
 
-export async function getStaticProps({ query }) {
+export async function getStaticProps() {
   const res = await fetch(`${API}/brand`);
   const data = await res.json();
 
