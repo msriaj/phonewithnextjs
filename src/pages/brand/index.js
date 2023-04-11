@@ -1,4 +1,4 @@
-import { API } from "@/config";
+import { API, APP_NAME } from "@/config";
 import { NextSeo } from "next-seo";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,7 +6,17 @@ import Link from "next/link";
 const index = ({ data }) => {
   return (
     <>
-      <NextSeo title="All Category" description="All Category" />
+      <NextSeo
+        title={`All Mobile Brands || Bangladeshi Mobile Brands | ${APP_NAME}`}
+        description={`All Mobile Brands || Bangladeshi Mobile Brands | ${APP_NAME}`}
+        canonical={`https://mobilepricebd.tech/brand`}
+        openGraph={{
+          url: "https://mobilepricebd.tech/brand",
+          title: "All Mobile Brands || Bangladeshi Mobile Brands | ${APP_NAME}",
+          description: `All Mobile Brands || Bangladeshi Mobile Brands | ${APP_NAME}`
+
+        }}
+      />
 
       <div className="text-center">
         <h2 className="text-[20px] pt-[25px] mb-1.5 font-bold">All Category</h2>

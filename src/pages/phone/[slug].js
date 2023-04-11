@@ -50,9 +50,9 @@ export default function Phone({ data }) {
       <NextSeo
         title={`${data.deviceName} Price in Bangladesh 2023 | Full Specs, Review & Comparison | ${APP_NAME}`}
         description={`${data.deviceName} - Full phone specifications and details, including official and unofficial BD price, expert rating, customer reviews, and comparisons. Check out ${data.deviceName} Price in Bangladesh 2023 and see why it's one of the top phones in the market.`}
-        canonical={"https://www.url.ie/a"}
+        canonical={`https://mobilepricebd.tech/phone/${data.slug}`}
         openGraph={{
-          url: "https://www.url.ie/a",
+          url: `https://mobilepricebd.tech/phone/${data.slug}`,
           title: `${data.deviceName} Price in Bangladesh 2023 | Full Specs, Review & Comparison | ${APP_NAME}`,
           description: `${data.deviceName} - Full phone specifications and details, including official and unofficial BD price, expert rating, customer reviews, and comparisons. Check out ${data.deviceName} Price in Bangladesh 2023 and see why it's one of the top phones in the market.`,
           images: [
@@ -102,7 +102,11 @@ export default function Phone({ data }) {
                 title: <>Home</>,
               },
               {
-                href: `/brand/${data.categoryInfo._id}`,
+                href: "/brand",
+                title: <>Brands</>,
+              },
+              {
+                href: `/brand/${data.categoryInfo.slug}`,
                 title: (
                   <>
                     <span> {data.categoryInfo.brandName}</span>
@@ -132,18 +136,22 @@ export default function Phone({ data }) {
                 {data.deviceName}
               </h1>
               <div className=" items-center mb-4">
-                {data.prices.map((price, idx) => (
-                  <span
-                    key={idx}
-                    className="text-[12px] px-[6px] py-[4px] text-[#666666] rounded-[30px] bg-[rgba(55,73,187,.05)] mr-4"
-                  >
-                    {Object.keys(price)[0]}:
-                    <b className="text-[14px] text-[#000000]">
-                      {" "}
-                      {Object.values(price)[0]} TK
-                    </b>
-                  </span>
-                ))}
+
+                <span
+                  className="text-[16px] px-[10px] py-[6px] text-[#666666] rounded-[30px] bg-[rgba(55,73,187,.05)] mr-4"
+                >
+                  <b className="font-bold ">Price: </b>
+                  {typeof data?.prices[0].BDT === "number"
+                    ? data?.prices[0].BDT.toString().replace(
+                      /\B(?=(\d{3})+(?!\d))/g,
+                      ","
+                    ) + " TK"
+                    : data?.prices[0].BDT}
+
+
+
+                </span>
+
               </div>
               <div className="my-4">
                 <p className="text-gray-700">{data.details} </p>

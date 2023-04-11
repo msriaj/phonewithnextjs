@@ -1,6 +1,6 @@
 import ProductCard from "@/components/Card/ProductCard";
 import SkeletonCard from "@/components/Skeleton/SkeletonCard";
-import { API } from "@/config";
+import { API, APP_NAME } from "@/config";
 import { information, overview } from "@/data/brand";
 import {
   Breadcrumb,
@@ -13,6 +13,7 @@ import {
   Select,
   Slider,
 } from "antd";
+import { CollectionPageJsonLd, NextSeo } from "next-seo";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -145,9 +146,21 @@ export default function Brand(props) {
 
   return (
     <>
-      <Head>
-        <title>{categoryInfo.brandName}</title>
-      </Head>
+
+      <NextSeo
+        title={`${categoryInfo.brandName} Mobiles Price in BD 2023 | Full Specs, Review & Comparison in Bangladesh | ${APP_NAME}`}
+        description={`${categoryInfo.brandName} - Full phone specifications and details, including official and unofficial BD price, expert rating, customer reviews, and comparisons. Check out ${categoryInfo.brandName} Price in Bangladesh 2023 and see why it's one of the top phones in the market.`}
+        canonical={`https://mobilepricebd.tech/phone/${categoryInfo.slug}`}
+        openGraph={{
+          url: `https://mobilepricebd.tech/phone/${categoryInfo.slug}`,
+          title: `${categoryInfo.brandName} Mobile Price in Bangladesh 2023 | Full Specs, Review & Comparison | ${APP_NAME}`,
+          description: `${categoryInfo.brandName} - Full phone specifications and details, including official and unofficial BD price, expert rating, customer reviews, and comparisons. Check out ${categoryInfo.brandName} Price in Bangladesh 2023 and see why it's one of the top phones in the market.`,
+
+        }}
+      />
+
+
+
       <div className="pt-4">
         <div className="p-4 mx-3 mb-5 bg-white rounded-[4px]">
           <Breadcrumb
@@ -157,10 +170,13 @@ export default function Brand(props) {
                 title: <>Home</>,
               },
               {
+                href: "/brand",
+                title: <>Brands</>,
+              },
+              {
                 title: (
                   <>
                     <span>
-                      {" "}
                       <h3>{categoryInfo.brandName}</h3>
                     </span>
                   </>
@@ -173,16 +189,15 @@ export default function Brand(props) {
 
       <div className="grid gap-5 md:grid-cols-12">
         {showFilter && (
-          <div onClick={() => setShowFilter(false)} className="h-screen">
-            <div className="fixed top-0 right-0 w-full h-full bg-black opacity-50 z-10"></div>
+          <div onClick={() => setShowFilter(false)}  >
+            <div className="absolute top-0 right-0  w-full h-screen bg-black opacity-50 z-10"></div>
           </div>
         )}
         <div
-          className={`${
-            showFilter
-              ? "bg-white h-full overflow-y-auto fixed z-[100]  top-0 right-0 transition-all duration-300 "
-              : " absolute  h-full z-[100]   top-0 -right-96 transition-all duration-300  ease-in-out"
-          } md:static md:bg-transparent  md:h-auto  md:col-span-3 rounded-[4px]  shadow-sm  md:flex flex-col gap-3 p-3 `}
+          className={`${showFilter
+            ? "bg-white h-full overflow-y-auto   z-[100] absolute   top-0 right-0   "
+            : "hidden md:block"
+            } md:static md:bg-transparent  md:h-auto  md:col-span-3 rounded-[4px]  shadow-sm  md:flex flex-col gap-3 p-3 `}
         >
           <div className="bg-white rounded-[4px] shadow-sm">
             <Collapse bordered={false} showArrow={false} activeKey="1">
@@ -317,6 +332,13 @@ export default function Brand(props) {
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="pb-5">
+        <div className="bg-white rounded-[4px] shadow p-3 md:p-6 text-gray-500">
+          <p>
+            Tags: {`${categoryInfo.brandName} Mobiles Price in Bangladesh, ${categoryInfo.brandName} Mobiles Full Specs & Review, ${categoryInfo.brandName} Mobiles Technical Specifications, ${categoryInfo.brandName} Mobiles Dimensions, ${categoryInfo.brandName} Mobiles Display Features, ${categoryInfo.brandName} Mobiles Camera Details, ${categoryInfo.brandName} Mobiles Battery Life, ${categoryInfo.brandName} Mobiles Processor Specs, ${categoryInfo.brandName} Mobiles Storage Capacity, ${categoryInfo.brandName} Mobiles RAM Capacity, ${categoryInfo.brandName} Mobiles Connectivity Options, ${categoryInfo.brandName} Mobiles Operating System, ${categoryInfo.brandName} Mobiles User Interface, ${categoryInfo.brandName} Mobiles User Experience, ${categoryInfo.brandName} Mobiles Review, ${categoryInfo.brandName} Mobiles Comparison, ${categoryInfo.brandName} Mobiles Ratings, ${categoryInfo.brandName} Mobiles User Ratings, ${categoryInfo.brandName} Mobiles Expert Opinion, ${categoryInfo.brandName} Mobiles User Feedback, ${categoryInfo.brandName} Mobiles Mobile Technology, ${categoryInfo.brandName} Mobiles Smartphone Features, ${categoryInfo.brandName} Mobiles Mobile Device Features, ${categoryInfo.brandName} Mobiles Mobile Phone Details, ${categoryInfo.brandName} Mobiles Mobile Phone Specs, ${categoryInfo.brandName} Mobiles Mobile Phone Review, ${categoryInfo.brandName} Mobiles Mobile Phone Comparison, ${categoryInfo.brandName} Mobiles Mobile Phone Ratings, Price of ${categoryInfo.brandName} Mobiles in Bangladesh`}
+          </p></div>
       </div>
     </>
   );

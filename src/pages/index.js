@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 
 const { Search } = Input;
 
-export default function Home({ latestPhones, total, featuredCategories, allCats }) {
+export default function Home({ latestPhones, total, featuredCategories }) {
   const Router = useRouter();
   const { query } = Router;
   const page = query.page || 1;
@@ -24,7 +24,14 @@ export default function Home({ latestPhones, total, featuredCategories, allCats 
     <>
       <NextSeo
         title={`${APP_NAME} - Find Your Dream Phone`}
-        description={`${APP_NAME} - Find Your Dream Phone`}
+        description={`All Kinds Of Mobile Price, Specs & Reviews In Bangladesh || ${APP_NAME} `}
+        canonical={`https://mobilepricebd.tech/`}
+        openGraph={{
+          url: `https://mobilepricebd.tech/`,
+          title: `${APP_NAME} - Find Your Dream Phone`,
+          description: `All Kinds Of Mobile Price, Specs & Reviews In Bangladesh || ${APP_NAME} `
+        }}
+
       />
       <main>
         <div className="py-10 px-3">
@@ -98,7 +105,7 @@ export default function Home({ latestPhones, total, featuredCategories, allCats 
 
 export async function getStaticProps({ query }) {
   const res = await fetch(`${API}/home`);
-  const { featuredCategories, allCats, latestPhones, total } = await res.json();
+  const { featuredCategories, latestPhones, total } = await res.json();
 
   return {
     props: {
