@@ -7,8 +7,6 @@ const Panel = Collapse.Panel;
 export default function Search() {
   const [data, setData] = useState([]);
   const [categories, setCategories] = useState([]);
-
-  console.log(data, categories);
   const [catId, setCatId] = useState(null);
   const [search, setSearch] = useState("");
 

@@ -42,11 +42,6 @@ export default function Phone({ data }) {
 
   return (
     <>
-      {/* <meta
-        title="keywords"
-        content={`${data.deviceName} Price in Bangladesh, ${data.deviceName} Full Specs & Review, ${data.deviceName} Technical Specifications, ${data.deviceName} Dimensions, ${data.deviceName} Display Features, ${data.deviceName} Camera Details, ${data.deviceName} Battery Life, ${data.deviceName} Processor Specs, ${data.deviceName} Storage Capacity, ${data.deviceName} RAM Capacity, ${data.deviceName} Connectivity Options, ${data.deviceName} Operating System, ${data.deviceName} User Interface, ${data.deviceName} User Experience, ${data.deviceName} Review, ${data.deviceName} Comparison, ${data.deviceName} Ratings, ${data.deviceName} User Ratings, ${data.deviceName} Expert Opinion, ${data.deviceName} User Feedback, ${data.deviceName} Mobile Technology, ${data.deviceName} Smartphone Features, ${data.deviceName} Mobile Device Features, ${data.deviceName} Mobile Phone Details, ${data.deviceName} Mobile Phone Specs, ${data.deviceName} Mobile Phone Review, ${data.deviceName} Mobile Phone Comparison, ${data.deviceName} Mobile Phone Ratings, Price of ${data.deviceName} in Bangladesh`}
-      /> */}
-
       <NextSeo
         title={`${data.deviceName} Price in Bangladesh 2023 | Full Specs, Review & Comparison | ${APP_NAME}`}
         description={`${data.deviceName} - Full phone specifications and details, including official and unofficial BD price, expert rating, customer reviews, and comparisons. Check out ${data.deviceName} Price in Bangladesh 2023 and see why it's one of the top phones in the market.`}
@@ -136,22 +131,15 @@ export default function Phone({ data }) {
                 {data.deviceName}
               </h1>
               <div className=" items-center mb-4">
-
-                <span
-                  className="text-[16px] px-[10px] py-[6px] text-[#666666] rounded-[30px] bg-[rgba(55,73,187,.05)] mr-4"
-                >
+                <span className="text-[16px] px-[10px] py-[6px] text-[#666666] rounded-[30px] bg-[rgba(55,73,187,.05)] mr-4">
                   <b className="font-bold ">Price: </b>
                   {typeof data?.prices[0].BDT === "number"
                     ? data?.prices[0].BDT.toString().replace(
-                      /\B(?=(\d{3})+(?!\d))/g,
-                      ","
-                    ) + " TK"
+                        /\B(?=(\d{3})+(?!\d))/g,
+                        ","
+                      ) + " TK"
                     : data?.prices[0].BDT}
-
-
-
                 </span>
-
               </div>
               <div className="my-4">
                 <p className="text-gray-700">{data.details} </p>

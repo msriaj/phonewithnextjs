@@ -1,18 +1,15 @@
 import ProductCard from "@/components/Card/ProductCard";
 import { API, APP_NAME } from "@/config";
-import { Button, Input, Pagination, Select, Spin } from "antd";
+import { Pagination, Spin } from "antd";
 import { NextSeo } from "next-seo";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-const { Search } = Input;
-
 export default function Home({ latestPhones, total, featuredCategories }) {
   const Router = useRouter();
   const { query } = Router;
   const page = query.page || 1;
-
 
   if (Router.isFallback)
     return (
@@ -29,13 +26,11 @@ export default function Home({ latestPhones, total, featuredCategories }) {
         openGraph={{
           url: `https://mobilepricebd.tech/`,
           title: `${APP_NAME} - Find Your Dream Phone`,
-          description: `All Kinds Of Mobile Price, Specs & Reviews In Bangladesh || ${APP_NAME} `
+          description: `All Kinds Of Mobile Price, Specs & Reviews In Bangladesh || ${APP_NAME} `,
         }}
-
       />
       <main>
         <div className="py-10 px-3">
-
           <div className="text-center">
             <h2 className="text-[20px] pt-[25px] mb-1.5 font-bold">
               Featured Category
@@ -68,7 +63,6 @@ export default function Home({ latestPhones, total, featuredCategories }) {
           {/* see all brand button */}
           <div className="text-center mb-16">
             <Link href="/brand">
-
               <button className="bg-[#db2d1a] text-white font-bold py-2 px-4 rounded-full">
                 See All Brands
               </button>
@@ -78,7 +72,6 @@ export default function Home({ latestPhones, total, featuredCategories }) {
             <h2 className="text-[16px] font-bold  text-gray-700  p-3 ">
               Latest Phones
             </h2>
-
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-5 p-3  md:p-12 pt-3 md:pt-3 ">
             {latestPhones.map((phone) => (
@@ -112,7 +105,6 @@ export async function getStaticProps({ query }) {
       latestPhones,
       total,
       featuredCategories,
-
     },
     revalidate: 10,
   };
