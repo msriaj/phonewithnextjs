@@ -92,8 +92,7 @@ export default function Home({
 
 export async function getStaticProps({ params }) {
   const res = await fetch(`${API}/home?page=${params.page || ""}`);
-  const { topCategories, allCategories, popularPhones, latestPhones, total } =
-    await res.json();
+  const { latestPhones, total } = await res.json();
 
   return {
     props: {
